@@ -1,0 +1,92 @@
+/*
+ * Two themes: `console` is the dark, backlit one where the neon accents actually
+ * emit, `daylight` is the same palette printed on paper. Every raw value lives
+ * here; components only ever reference the semantic aliases below.
+ */
+
+:root,
+[data-theme="console"] {
+  color-scheme: dark;
+
+  /* Surfaces run cold and blue rather than neutral grey, so the two accents read
+     as emitted light instead of paint. */
+  --c-void: #04060e;
+  --c-void-deep: #020409;
+  --c-panel: #080d18;
+  --c-panel-raised: #0d1424;
+  --c-line: #1e2b45;
+  --c-line-soft: #141d30;
+
+  --c-ink: #dfe7f5;
+  --c-ink-dim: #8496b8;
+  --c-ink-faint: #55637f;
+
+  /* Two accents, far enough apart in hue to pair without muddying: electric blue
+     carries everything structural, violet is the second voice. Amber and red are
+     held back for the only two states allowed to interrupt you. */
+  --c-sig: #38d9ff;
+  --c-plasma: #a06bff;
+  --c-warn: #ffc24d;
+  --c-crit: #ff4d6d;
+
+  --grid-line: rgb(120 180 255 / 5%);
+  --glow-strength: 0.85;
+  --panel-blur: 10px;
+}
+
+[data-theme="daylight"] {
+  color-scheme: light;
+
+  --c-void: #eef1f4;
+  --c-void-deep: #e2e7ec;
+  --c-panel: #f8fafb;
+  --c-panel-raised: #ffffff;
+  --c-line: #c3ced8;
+  --c-line-soft: #dbe3ea;
+
+  --c-ink: #16222e;
+  --c-ink-dim: #4d6274;
+  --c-ink-faint: #7d93a5;
+
+  /* Darkened hard for contrast on paper. Neon is light, and light on white is
+     nothing — the light theme keeps the hues and gives up the glow. */
+  --c-sig: #0a63c9;
+  --c-plasma: #6d28d9;
+  --c-warn: #9a5b00;
+  --c-crit: #c02a22;
+
+  --grid-line: rgb(0 20 40 / 5%);
+  --glow-strength: 0;
+  --panel-blur: 0px;
+}
+
+@theme inline {
+  --color-void: var(--c-void);
+  --color-void-deep: var(--c-void-deep);
+  --color-panel: var(--c-panel);
+  --color-panel-raised: var(--c-panel-raised);
+  --color-line: var(--c-line);
+  --color-line-soft: var(--c-line-soft);
+
+  --color-ink: var(--c-ink);
+  --color-ink-dim: var(--c-ink-dim);
+  --color-ink-faint: var(--c-ink-faint);
+
+  --color-sig: var(--c-sig);
+  --color-warn: var(--c-warn);
+  --color-crit: var(--c-crit);
+  --color-plasma: var(--c-plasma);
+
+  --font-display: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", monospace;
+
+  /* A single modular scale keeps every readout on the same rhythm. */
+  --text-readout: 0.6875rem;
+  --text-readout--line-height: 1.2;
+  --text-readout--letter-spacing: 0.14em;
+
+  --tracking-console: 0.18em;
+
+  --ease-launch: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-hold: cubic-bezier(0.65, 0, 0.35, 1);
+}
