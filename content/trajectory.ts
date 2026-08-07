@@ -1,12 +1,8 @@
 import type { TrajectoryEntry } from "./types"
 
 /**
- * Esta é a parte que eu não consegui montar do GitHub — perfil público não traz
- * cargo, período nem formação. Só o empregador (@techlabsp) estava lá.
- *
- * Preencha os TODO. Dica para as notas: verbo no passado e número sempre que der.
- * "Construí o painel de faturamento" é fraco; "Reduzi o fechamento mensal de
- * três dias para uma tarde" é o que faz alguém te chamar.
+ * Formação e certificados migrados do portfólio anterior.
+ * A entrada TechLab ainda precisa de cargo, período e entregas reais.
  */
 export const trajectory: readonly TrajectoryEntry[] = [
   {
@@ -39,40 +35,82 @@ export const trajectory: readonly TrajectoryEntry[] = [
   },
 
   {
-    id: "formacao",
+    id: "mba-fsa",
     kind: "education",
-    // TODO: período. Se estiver cursando, use "2024 – 2027".
-    period: "TODO",
-    org: "TODO: instituição",
+    period: "2025",
+    org: "Centro Universitário Fundação Santo André (FSA)",
     title: {
-      pt: "TODO: seu curso",
-      en: "TODO: your degree",
-      es: "TODO: tu carrera",
+      pt: "MBA Data Science & Analytics",
+      en: "MBA Data Science & Analytics",
+      es: "MBA Data Science & Analytics",
     },
     notes: {
-      pt: ["TODO: em andamento ou concluído, e uma linha sobre o foco."],
-      en: ["TODO: in progress or completed, plus one line on the focus."],
-      es: ["TODO: en curso o concluido, más una línea sobre el enfoque."],
+      pt: [
+        "Especialização em Ciência de Dados com foco em Machine Learning: estatística, análise de dados, big data, inteligência artificial e ferramentas para apoiar decisão estratégica.",
+      ],
+      en: [
+        "Specialization in Data Science with a focus on Machine Learning: statistics, data analysis, big data, artificial intelligence and tools that support strategic decisions.",
+      ],
+      es: [
+        "Especialización en Ciencia de Datos con enfoque en Machine Learning: estadística, análisis de datos, big data, inteligencia artificial y herramientas para apoyar decisiones estratégicas.",
+      ],
     },
   },
 
   {
-    id: "alura",
-    kind: "credential",
-    // TODO: o ano em que você concluiu. Seus repositórios da Alura são de 2022–2023.
+    id: "gestao-ti-fsa",
+    kind: "education",
     period: "2023",
-    org: "Alura",
+    org: "Centro Universitário Fundação Santo André (FSA)",
     title: {
-      // TODO: o nome exato da formação que você concluiu lá.
-      pt: "TODO: nome da formação (ex.: Formação Power BI)",
-      en: "TODO: name of the track (e.g. Power BI track)",
-      es: "TODO: nombre de la formación (p. ej. Formación Power BI)",
+      pt: "Gestão – Tecnologia da Informação",
+      en: "Management – Information Technology",
+      es: "Gestión – Tecnología de la Información",
     },
     notes: {
-      pt: ["TODO: o que ela cobriu, em uma linha."],
-      en: ["TODO: what it covered, in one line."],
-      es: ["TODO: qué cubrió, en una línea."],
+      pt: [
+        "Planejamento e controle de recursos de TI: governança, segurança da informação, gestão de projetos, infraestrutura e alinhamento entre tecnologia e negócio.",
+      ],
+      en: [
+        "Planning and control of IT resources: governance, information security, project management, infrastructure and alignment between technology and business.",
+      ],
+      es: [
+        "Planificación y control de recursos de TI: gobernanza, seguridad de la información, gestión de proyectos, infraestructura y alineación entre tecnología y negocio.",
+      ],
     },
-    // TODO: link do certificado, se você tiver.
+  },
+
+  {
+    id: "cert-powerbi",
+    kind: "credential",
+    period: "2023",
+    org: "Microsoft",
+    title: {
+      pt: "Microsoft Power BI Data Analyst",
+      en: "Microsoft Power BI Data Analyst",
+      es: "Microsoft Power BI Data Analyst",
+    },
+    notes: {
+      pt: ["Certificação oficial em análise de dados e modelagem com Power BI."],
+      en: ["Official certification in data analysis and modelling with Power BI."],
+      es: ["Certificación oficial en análisis de datos y modelado con Power BI."],
+    },
+  },
+
+  {
+    id: "cert-tableau",
+    kind: "credential",
+    period: "2023",
+    org: "Tableau",
+    title: {
+      pt: "Tableau Desktop Specialist",
+      en: "Tableau Desktop Specialist",
+      es: "Tableau Desktop Specialist",
+    },
+    notes: {
+      pt: ["Certificação em visualização e exploração de dados com Tableau Desktop."],
+      en: ["Certification in data visualisation and exploration with Tableau Desktop."],
+      es: ["Certificación en visualización y exploración de datos con Tableau Desktop."],
+    },
   },
 ]
