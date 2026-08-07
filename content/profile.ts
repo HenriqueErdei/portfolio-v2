@@ -1,8 +1,8 @@
 import type { Profile } from "./types"
 
 /**
- * Preenchido a partir do perfil público em github.com/HenriqueErdei.
- * O que eu não tinha como saber está marcado com TODO — são poucos campos.
+ * Preenchido a partir do perfil público e do portfólio anterior
+ * (github.com/HenriqueErdei/Portfolio).
  */
 export const profile: Profile = {
   name: "Henrique Erdei",
@@ -14,11 +14,10 @@ export const profile: Profile = {
     es: "Ingeniero Full-Stack & Especialista en Datos",
   },
 
-  location: "São Paulo, Brasil",
+  location: "Santo André, SP, Brasil",
   timezone: "America/Sao_Paulo",
 
-  // TODO: seu e-mail. Não é público no GitHub, então não tive como puxar.
-  email: "TODO@exemplo.com",
+  email: "henriqueerdeijob@gmail.com",
 
   headline: {
     pt: ["Eu transformo", "dado bruto", "em decisão."],
@@ -43,11 +42,21 @@ export const profile: Profile = {
 
   available: true,
 
+  resumeUrl: "/curriculo.pdf",
+
   socials: [
     { label: "GitHub", handle: "HenriqueErdei", url: "https://github.com/HenriqueErdei", icon: "github" },
-    // TODO: a URL do seu LinkedIn.
-    { label: "LinkedIn", handle: "/in/TODO", url: "https://linkedin.com/in/TODO", icon: "linkedin" },
-    // TODO: repetir aqui o mesmo e-mail de cima.
-    { label: "Email", handle: "TODO@exemplo.com", url: "mailto:TODO@exemplo.com", icon: "mail" },
+    {
+      label: "LinkedIn",
+      handle: "/in/henrique-erdei-442b09200",
+      url: "https://www.linkedin.com/in/henrique-erdei-442b09200/",
+      icon: "linkedin",
+    },
+    {
+      label: "Email",
+      handle: "henriqueerdeijob@gmail.com",
+      url: "mailto:henriqueerdeijob@gmail.com",
+      icon: "mail",
+    },
   ],
 }
