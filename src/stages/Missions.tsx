@@ -135,6 +135,16 @@ function MissionPanel({
         <div id={reportId} hidden={!open} className="mt-6 border-t border-line-soft pt-5">
           <h4 className="readout text-sig">{t.work.detailLabel}</h4>
 
+          {mission.image ? (
+            <img
+              src={mission.image}
+              alt={pick(mission.imageAlt)}
+              className="mt-3 w-full border border-line-soft object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : null}
+
           <div className="mt-3 flex flex-col gap-3">
             {pick(mission.briefing).map((paragraph) => (
               <p key={paragraph} className="text-ink-dim">
