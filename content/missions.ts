@@ -1,17 +1,11 @@
 import type { Mission } from "./types"
 
 /**
- * Montado a partir dos repositórios públicos em github.com/HenriqueErdei.
+ * Projetos migrados do portfólio anterior (HenriqueErdei/Portfolio), com
+ * curadoria híbrida: painéis Power BI agrupados; Flask+Gemini e Protheus
+ * como missões próprias.
  *
- * Duas decisões de curadoria que vale você revisar:
- *  - Os seis repositórios de Power BI viraram UM projeto (05). Seis painéis
- *    como seis cartões separados diluem cada um; juntos eles mostram repertório.
- *  - `Beginner-projects-ALURA` ficou de fora. Está no seu GitHub de qualquer
- *    forma, e num portfólio ele puxa a média para baixo em vez de somar.
- *
- * Onde eu não tinha número real, não inventei métrica. Se você tiver (volume de
- * linhas processadas, tempo que o relatório levava antes, quantas pessoas usam),
- * adicione em `metrics` — é o que separa "fiz um projeto" de "resolvi um problema".
+ * Onde não havia número real, não inventei métrica.
  */
 export const missions: readonly Mission[] = [
   {
@@ -44,8 +38,7 @@ export const missions: readonly Mission[] = [
     },
     stack: ["React 19", "TypeScript", "Vite", "Tailwind CSS", "three.js", "GLSL", "Vitest"],
     links: {
-      // TODO: crie o repositório e cole a URL aqui.
-      repo: "https://github.com/HenriqueErdei/TODO",
+      repo: "https://github.com/HenriqueErdei/portfolio-v2",
     },
     imageAlt: {
       pt: "Fundo do portfólio: um foguete em neon se desfazendo numa cascata de estilhaços geométricos.",
@@ -59,71 +52,161 @@ export const missions: readonly Mission[] = [
     code: "02",
     name: "Data Flask System",
     year: 2025,
-    status: "archived",
+    status: "orbital",
     summary: {
-      pt: "Sistema de BI completo em Python, Flask e SQLite: ingestão, modelo de dados e relatórios servidos direto pela aplicação web.",
-      en: "A full BI system in Python, Flask and SQLite: ingestion, data model and reports served straight from the web app.",
-      es: "Sistema de BI completo en Python, Flask y SQLite: ingesta, modelo de datos e informes servidos directamente por la aplicación web.",
+      pt: "Sistema web em Python, Flask e SQLite com controle de usuários, permissões por módulo e Gemini integrado para apoiar tomadas de decisão.",
+      en: "A web system in Python, Flask and SQLite with user control, module permissions and Gemini integrated to support decision-making.",
+      es: "Sistema web en Python, Flask y SQLite con control de usuarios, permisos por módulo y Gemini integrado para apoyar la toma de decisiones.",
     },
     briefing: {
       pt: [
-        "TODO: qual era a dor antes? (relatório feito à mão no Excel, dado espalhado em planilhas, retrabalho toda semana — descreva o cenário real.)",
-        "TODO: a decisão técnica de que você mais se orgulha. Por que Flask e SQLite em vez de um BI pronto? O que essa escolha te deu — controle do modelo, custo zero de licença, deploy simples?",
-        "TODO: o resultado. Quanto tempo economizou, quantas fontes uniu, quem passou a usar.",
+        "A aplicação une autenticação, autorização por módulo e relatórios servidos direto pelo Flask. O dado fica em SQLite; a interface HTML/CSS entrega o fluxo operacional sem depender de um BI externo.",
+        "O Gemini entra como apoio à decisão: o usuário consulta o sistema e recebe sugestões a partir do contexto dos dados já modelados — útil quando a pergunta não cabe num gráfico fixo.",
+        "Demo pública disponível; para entrar como usuário: user / 123.",
       ],
       en: [
-        "TODO: what hurt before? (a report assembled by hand in Excel, data scattered across spreadsheets, rework every week — describe the real situation.)",
-        "TODO: the technical decision you are proudest of. Why Flask and SQLite instead of an off-the-shelf BI tool? What did that buy you — control of the model, no licence cost, simple deploys?",
-        "TODO: the outcome. How much time it saved, how many sources it joined, who ended up using it.",
+        "The app joins authentication, per-module authorization and reports served straight from Flask. Data lives in SQLite; the HTML/CSS interface covers the operational flow without an external BI tool.",
+        "Gemini supports decisions: the user queries the system and gets suggestions from the already modelled data — useful when the question does not fit a fixed chart.",
+        "Public demo available; sign in as user: user / 123.",
       ],
       es: [
-        "TODO: ¿qué dolía antes? (un informe hecho a mano en Excel, datos dispersos en hojas de cálculo, retrabajo cada semana — describe la situación real.)",
-        "TODO: la decisión técnica de la que estás más orgulloso. ¿Por qué Flask y SQLite en vez de un BI ya hecho? ¿Qué te dio — control del modelo, cero costo de licencia, despliegue simple?",
-        "TODO: el resultado. Cuánto tiempo ahorró, cuántas fuentes unió, quién terminó usándolo.",
+        "La aplicación une autenticación, autorización por módulo e informes servidos directamente por Flask. Los datos viven en SQLite; la interfaz HTML/CSS cubre el flujo operativo sin depender de un BI externo.",
+        "Gemini apoya la decisión: el usuario consulta el sistema y recibe sugerencias a partir del contexto de los datos ya modelados — útil cuando la pregunta no cabe en un gráfico fijo.",
+        "Demo pública disponible; acceso de usuario: user / 123.",
       ],
     },
-    stack: ["Python", "Flask", "SQLite", "SQL", "HTML", "CSS"],
-    links: { repo: "https://github.com/HenriqueErdei/Data-flask-system" },
+    stack: ["Python", "Flask", "SQLite", "Gemini", "HTML", "CSS"],
+    links: {
+      repo: "https://github.com/HenriqueErdei/Data-flask-system",
+      demo: "https://data-flask-system.onrender.com",
+    },
+    image: "/missions/flask-system.png",
     imageAlt: {
-      pt: "TODO: descreva a tela principal do sistema para quem usa leitor de tela.",
-      en: "TODO: describe the system's main screen for screen reader users.",
-      es: "TODO: describe la pantalla principal del sistema para lectores de pantalla.",
+      pt: "Tela do Data Flask System com módulos de negócio e área de apoio à decisão.",
+      en: "Data Flask System screen showing business modules and the decision-support area.",
+      es: "Pantalla del Data Flask System con módulos de negocio y el área de apoyo a la decisión.",
+    },
+  },
+
+  {
+    id: "powerbi-panels",
+    code: "03",
+    name: "Painéis Power BI",
+    year: 2025,
+    status: "orbital",
+    summary: {
+      pt: "Família de painéis Power BI — jurídico, estoque, controle de projetos e outras áreas — cada um modelado a partir da pergunta que o negócio precisava responder.",
+      en: "A family of Power BI dashboards — legal, stock, project control and other areas — each modelled from the question the business needed answered.",
+      es: "Familia de paneles Power BI — jurídico, inventario, control de proyectos y otras áreas — cada uno modelado desde la pregunta que el negocio necesitaba responder.",
+    },
+    briefing: {
+      pt: [
+        "Indicador de processos jurídicos: KPIs de processos e valores gastos, com drill-down. Estoque de eletrônicos: visão de inventário em projeto fictício. Controle de projetos: gastos, lucros, prazos e cargos numa só tela.",
+        "O método se repete: tabela fato separada das dimensões, medidas em DAX em vez de coluna calculada onde dá, e hierarquia de tempo de ano até dia. Também há painéis de faturamento/devolução, fluxo de caixa e varejo no mesmo repertório.",
+        "Demos públicas: jurídico, estoque e controle de projetos. Os repositórios ficam sob a conta HenriqueErdei com o prefixo PowerBI.",
+      ],
+      en: [
+        "Legal process indicator: KPIs for cases and spend, with drill-down. Electronics stock: inventory view on a fictional project. Project control: spend, profit, deadlines and roles on one screen.",
+        "The method repeats: a fact table kept separate from dimensions, DAX measures instead of calculated columns wherever possible, and a time hierarchy from year down to day. Invoicing/returns, cash flow and retail panels sit in the same repertoire.",
+        "Public demos: legal, stock and project control. Repositories live under HenriqueErdei with the PowerBI prefix.",
+      ],
+      es: [
+        "Indicador de procesos jurídicos: KPIs de procesos y gasto, con drill-down. Inventario de electrónicos: visión de stock en un proyecto ficticio. Control de proyectos: gastos, beneficios, plazos y cargos en una sola pantalla.",
+        "El método se repite: tabla de hechos separada de las dimensiones, medidas en DAX en vez de columna calculada donde se puede, y jerarquía de tiempo de año a día. También hay paneles de facturación/devolución, flujo de caja y retail en el mismo repertorio.",
+        "Demos públicas: jurídico, inventario y control de proyectos. Los repositorios están bajo HenriqueErdei con el prefijo PowerBI.",
+      ],
+    },
+    stack: ["Power BI", "DAX", "Power Query", "Modelagem dimensional"],
+    links: {
+      repo: "https://github.com/HenriqueErdei?tab=repositories&q=PowerBI",
+      demo: "https://app.powerbi.com/view?r=eyJrIjoiZDU4NmE4MGQtNDg4MS00Yjc0LThmMjItNWM0MzhhNTFkNmI2IiwidCI6Ijc2N2JmYWQ3LTVjM2MtNDE0MS1hOWQ0LTVhY2RhNTQ5YzkxMCJ9&embedImagePlaceholder=true",
+    },
+    image: "/missions/juridico.png",
+    imageAlt: {
+      pt: "Dashboard Power BI de processos jurídicos com KPIs de volume e valores gastos.",
+      en: "Power BI dashboard for legal processes with KPIs for volume and spend.",
+      es: "Panel Power BI de procesos jurídicos con KPIs de volumen y gasto.",
+    },
+  },
+
+  {
+    id: "protheus-reports",
+    code: "04",
+    name: "Automação de relatórios Protheus",
+    year: 2025,
+    status: "orbital",
+    summary: {
+      pt: "Automação de relatórios personalizados no Protheus, com integração MySQL e Python para extrair e entregar o que o ERP não resolve sozinho.",
+      en: "Custom report automation on Protheus, with MySQL and Python integration to extract and deliver what the ERP does not solve alone.",
+      es: "Automatización de informes personalizados en Protheus, con integración MySQL y Python para extraer y entregar lo que el ERP no resuelve solo.",
+    },
+    briefing: {
+      pt: [
+        "O Protheus concentra o operacional, mas relatórios sob medida pedem outro caminho: consultar o banco, transformar o dado e gerar a saída fora do fluxo padrão do ERP.",
+        "O script em Python fala com o MySQL, monta o relatório e reduz o trabalho manual de quem precisava montar a mesma visão toda vez.",
+        "Código e documentação no repositório Application-dataBase-relatorys-PROTHEUS.",
+      ],
+      en: [
+        "Protheus holds the operational core, but custom reports need another path: query the database, transform the data and produce the output outside the ERP's default flow.",
+        "A Python script talks to MySQL, builds the report and cuts the manual work of assembling the same view every time.",
+        "Code and docs live in the Application-dataBase-relatorys-PROTHEUS repository.",
+      ],
+      es: [
+        "Protheus concentra lo operativo, pero los informes a medida piden otro camino: consultar la base, transformar el dato y generar la salida fuera del flujo estándar del ERP.",
+        "El script en Python habla con MySQL, arma el informe y reduce el trabajo manual de quien necesitaba montar la misma vista una y otra vez.",
+        "Código y documentación en el repositorio Application-dataBase-relatorys-PROTHEUS.",
+      ],
+    },
+    stack: ["Protheus", "MySQL", "Python"],
+    links: {
+      repo: "https://github.com/HenriqueErdei/Application-dataBase-relatorys-PROTHEUS",
+      demo: "https://github.com/HenriqueErdei/Application-dataBase-relatorys-PROTHEUS",
+    },
+    image: "/missions/protheus.png",
+    imageAlt: {
+      pt: "Tela ou fluxo da automação de relatórios personalizados no Protheus.",
+      en: "Screen or flow of the custom report automation on Protheus.",
+      es: "Pantalla o flujo de la automatización de informes personalizados en Protheus.",
     },
   },
 
   {
     id: "portfolio-2025",
-    code: "03",
+    code: "05",
     name: "Portfólio (2025)",
     year: 2025,
-    status: "orbital",
+    status: "archived",
     summary: {
-      pt: "A versão anterior do meu portfólio, em React e TypeScript, publicada na Vercel.",
-      en: "The previous version of my portfolio, in React and TypeScript, deployed on Vercel.",
-      es: "La versión anterior de mi portafolio, en React y TypeScript, publicada en Vercel.",
+      pt: "A versão anterior do portfólio, em Next.js e TypeScript, com i18n e galeria de projetos — publicada na Vercel.",
+      en: "The previous portfolio version, in Next.js and TypeScript, with i18n and a project gallery — deployed on Vercel.",
+      es: "La versión anterior del portafolio, en Next.js y TypeScript, con i18n y galería de proyectos — publicada en Vercel.",
     },
     briefing: {
       pt: [
-        "TODO: o que essa versão te ensinou, e o que te fez querer reconstruir do zero em 2026.",
+        "Serviu para organizar conteúdo, traduções e demos num layout clássico de seções. Foi a base do que migrou para este Mission Control — o conteúdo veio de lá; a apresentação mudou por completo.",
       ],
-      en: ["TODO: what this version taught you, and what made you want to rebuild from scratch in 2026."],
-      es: ["TODO: qué te enseñó esta versión, y qué te hizo querer reconstruirla desde cero en 2026."],
+      en: [
+        "It organised content, translations and demos in a classic section layout. That became the source for what migrated into this Mission Control — the content came from there; the presentation changed entirely.",
+      ],
+      es: [
+        "Sirvió para organizar contenido, traducciones y demos en un layout clásico de secciones. Fue la base de lo que migró a este Mission Control — el contenido vino de ahí; la presentación cambió por completo.",
+      ],
     },
-    stack: ["React", "TypeScript", "Vercel"],
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
     links: {
       repo: "https://github.com/HenriqueErdei/Portfolio",
       demo: "https://portfolio-teal-seven-cjydnu3awu.vercel.app",
     },
     imageAlt: {
-      pt: "TODO: descreva a página inicial do portfólio anterior.",
-      en: "TODO: describe the home page of the previous portfolio.",
-      es: "TODO: describe la página de inicio del portafolio anterior.",
+      pt: "Página inicial do portfólio 2025 com hero e navegação por seções.",
+      en: "Home page of the 2025 portfolio with hero and section navigation.",
+      es: "Página de inicio del portafolio 2025 con hero y navegación por secciones.",
     },
   },
 
   {
     id: "faker-generator",
-    code: "04",
+    code: "06",
     name: "Faker Business Data Generator",
     year: 2024,
     status: "archived",
@@ -135,15 +218,15 @@ export const missions: readonly Mission[] = [
     briefing: {
       pt: [
         "Todo projeto de dados de estudo trava no mesmo ponto: não existe dado realista para testar. Esta ferramenta resolve isso gerando bases de negócio coerentes — com relação entre tabelas, não colunas aleatórias soltas.",
-        "TODO: até que volume você chegou a gerar, e o que precisou mudar para o script não estourar a memória nesse tamanho? Essa é a parte interessante da história.",
+        "Útil para alimentar painéis e pipelines sem expor dado sensível; o volume alvo depende do caso, de amostras pequenas até bases grandes para stress de ETL.",
       ],
       en: [
         "Every data project you build to learn stalls at the same point: there is no realistic data to test with. This tool fixes that by generating coherent business datasets — with relationships between tables, not loose random columns.",
-        "TODO: what volume did you actually generate, and what had to change so the script would not blow past memory at that size? That is the interesting half of the story.",
+        "Useful for feeding dashboards and pipelines without exposing sensitive data; target volume depends on the case, from small samples to large bases for ETL stress.",
       ],
       es: [
         "Todo proyecto de datos de estudio se traba en el mismo punto: no hay datos realistas para probar. Esta herramienta lo resuelve generando bases de negocio coherentes — con relación entre tablas, no columnas aleatorias sueltas.",
-        "TODO: ¿hasta qué volumen llegaste a generar, y qué tuviste que cambiar para que el script no reventara la memoria a ese tamaño? Esa es la parte interesante.",
+        "Útil para alimentar paneles y pipelines sin exponer datos sensibles; el volumen depende del caso, desde muestras pequeñas hasta bases grandes para estrés de ETL.",
       ],
     },
     stack: ["Python", "Faker", "Pandas", "CSV"],
@@ -151,54 +234,15 @@ export const missions: readonly Mission[] = [
       repo: "https://github.com/HenriqueErdei/Faker-project-generator-business-bigdata",
     },
     imageAlt: {
-      pt: "TODO: descreva uma amostra da base gerada, ou o terminal rodando o gerador.",
-      en: "TODO: describe a sample of the generated dataset, or the terminal running the generator.",
-      es: "TODO: describe una muestra de la base generada, o la terminal ejecutando el generador.",
-    },
-  },
-
-  {
-    id: "powerbi-panels",
-    code: "05",
-    name: "Painéis Power BI",
-    year: 2025,
-    status: "archived",
-    summary: {
-      pt: "Seis painéis de áreas diferentes — faturamento e devolução, fluxo de caixa, jurídico, estoque, controle de projetos e varejo — cada um modelado a partir da pergunta que a área precisava responder.",
-      en: "Six dashboards across different areas — invoicing and returns, cash flow, legal, stock, project control and retail — each modelled from the question that area needed answered.",
-      es: "Seis paneles de áreas distintas — facturación y devolución, flujo de caja, jurídico, inventario, control de proyectos y retail — cada uno modelado desde la pregunta que el área necesitaba responder.",
-    },
-    briefing: {
-      pt: [
-        "Faturamento e devolução, fluxo de caixa em rublo, despesa por processo jurídico, estoque de eletrônicos, controle de projetos com prazos e valores, e vendas de uma livraria. Domínios diferentes, mesmo método: entender a decisão primeiro, modelar depois.",
-        "O que se repete entre eles é a modelagem: tabela fato separada das dimensões, medidas em DAX em vez de coluna calculada onde dá, e uma hierarquia de tempo que permite descer de ano até dia sem refazer o visual.",
-        "TODO: escolha um desses painéis e conte a decisão de modelagem mais difícil dele. Um caso concreto vale mais que a lista dos seis.",
-      ],
-      en: [
-        "Invoicing and returns, cash flow in roubles, spend per legal case, electronics stock, project control with deadlines and amounts, and bookstore sales. Different domains, same method: understand the decision first, model second.",
-        "What repeats across them is the modelling: a fact table kept separate from dimensions, DAX measures instead of calculated columns wherever possible, and a time hierarchy that drills from year down to day without rebuilding the visual.",
-        "TODO: pick one of these dashboards and tell the hardest modelling decision in it. One concrete case is worth more than the list of six.",
-      ],
-      es: [
-        "Facturación y devolución, flujo de caja en rublos, gasto por proceso jurídico, inventario de electrónicos, control de proyectos con plazos e importes, y ventas de una librería. Dominios distintos, mismo método: entender la decisión primero, modelar después.",
-        "Lo que se repite entre ellos es el modelado: tabla de hechos separada de las dimensiones, medidas en DAX en vez de columna calculada donde se puede, y una jerarquía de tiempo que baja de año a día sin rehacer el visual.",
-        "TODO: elige uno de estos paneles y cuenta la decisión de modelado más difícil. Un caso concreto vale más que la lista de los seis.",
-      ],
-    },
-    stack: ["Power BI", "DAX", "Power Query", "Modelagem dimensional"],
-    links: {
-      repo: "https://github.com/HenriqueErdei?tab=repositories&q=PowerBI",
-    },
-    imageAlt: {
-      pt: "TODO: descreva um dos painéis — quais indicadores aparecem e como estão organizados.",
-      en: "TODO: describe one of the dashboards — which metrics appear and how they are laid out.",
-      es: "TODO: describe uno de los paneles — qué indicadores aparecen y cómo están organizados.",
+      pt: "Amostra de base CSV gerada ou terminal executando o gerador Faker.",
+      en: "Sample of a generated CSV dataset, or the terminal running the Faker generator.",
+      es: "Muestra de una base CSV generada, o la terminal ejecutando el generador Faker.",
     },
   },
 
   {
     id: "clean-architecture",
-    code: "06",
+    code: "07",
     name: "Clean Architecture em TypeScript",
     year: 2023,
     status: "archived",
@@ -209,21 +253,21 @@ export const missions: readonly Mission[] = [
     },
     briefing: {
       pt: [
-        "TODO: o que ficou de prático desse estudo? Qual conceito você passou a usar de verdade nos projetos seguintes, e qual você achou exagerado para o tamanho dos problemas que você resolve?",
+        "Exercício de camadas e SOLID em Node/TypeScript: domínio no centro, casos de uso no meio, adapters na borda. Serve de referência quando um sistema precisa crescer sem acoplar regra de negócio ao banco ou ao framework.",
       ],
       en: [
-        "TODO: what stuck from this study? Which concept did you genuinely start using in later projects, and which one felt like overkill for the size of the problems you solve?",
+        "A layers and SOLID exercise in Node/TypeScript: domain at the centre, use cases in the middle, adapters at the edge. Useful reference when a system needs to grow without coupling business rules to the database or the framework.",
       ],
       es: [
-        "TODO: ¿qué quedó de práctico de este estudio? ¿Qué concepto empezaste a usar de verdad después, y cuál te pareció excesivo para el tamaño de los problemas que resuelves?",
+        "Ejercicio de capas y SOLID en Node/TypeScript: dominio en el centro, casos de uso en el medio, adapters en el borde. Sirve de referencia cuando un sistema necesita crecer sin acoplar la regla de negocio a la base o al framework.",
       ],
     },
     stack: ["TypeScript", "Node.js", "Clean Architecture", "SOLID"],
     links: { repo: "https://github.com/HenriqueErdei/Clean-architecture-basic" },
     imageAlt: {
-      pt: "TODO: descreva um diagrama das camadas, se você quiser incluir imagem aqui.",
-      en: "TODO: describe a diagram of the layers, if you want an image here.",
-      es: "TODO: describe un diagrama de las capas, si quieres poner imagen aquí.",
+      pt: "Diagrama das camadas de clean architecture no estudo em TypeScript.",
+      en: "Diagram of the clean architecture layers in the TypeScript study.",
+      es: "Diagrama de las capas de clean architecture en el estudio en TypeScript.",
     },
   },
 ]
