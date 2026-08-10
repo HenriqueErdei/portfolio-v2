@@ -1,7 +1,8 @@
 import type { TrajectoryEntry } from "./types"
 
 /**
- * Formação e certificados migrados do portfólio anterior.
+ * Formação e cursos complementares (resumo do LinkedIn — ~40 credenciais
+ * agrupadas por tema, sem listar cada certificado).
  * A entrada TechLab ainda precisa de cargo, período e entregas reais.
  */
 export const trajectory: readonly TrajectoryEntry[] = [
@@ -81,36 +82,62 @@ export const trajectory: readonly TrajectoryEntry[] = [
   },
 
   {
-    id: "cert-powerbi",
+    id: "cursos-dev",
     kind: "credential",
-    period: "2023",
-    org: "Microsoft",
+    period: "2022 – 2023",
+    org: "Alura · Rocketseat",
     title: {
-      pt: "Microsoft Power BI Data Analyst",
-      en: "Microsoft Power BI Data Analyst",
-      es: "Microsoft Power BI Data Analyst",
+      pt: "Cursos — desenvolvimento web e back-end",
+      en: "Courses — web and back-end development",
+      es: "Cursos — desarrollo web y back-end",
     },
     notes: {
-      pt: ["Certificação oficial em análise de dados e modelagem com Power BI."],
-      en: ["Official certification in data analysis and modelling with Power BI."],
-      es: ["Certificación oficial en análisis de datos y modelado con Power BI."],
+      pt: [
+        "Front-end: HTML5/CSS3, JavaScript (DOM, armazenamento no navegador), layouts responsivos.",
+        "Back-end e base: Python 3 (introdução, orientação a objetos, I/O), SQL Server, Git/GitHub, Linux (terminal e pacotes).",
+        "Rocketseat — Trilha Conectar (2023).",
+      ],
+      en: [
+        "Front-end: HTML5/CSS3, JavaScript (DOM, browser storage), responsive layouts.",
+        "Back-end and data layer: Python 3 (introduction, OOP, I/O), SQL Server, Git/GitHub, Linux (terminal and packages).",
+        "Rocketseat — Trilha Conectar track (2023).",
+      ],
+      es: [
+        "Front-end: HTML5/CSS3, JavaScript (DOM, almacenamiento en el navegador), layouts responsivos.",
+        "Back-end y capa de datos: Python 3 (introducción, POO, I/O), SQL Server, Git/GitHub, Linux (terminal y paquetes).",
+        "Rocketseat — Trilha Conectar (2023).",
+      ],
     },
+    url: "https://www.linkedin.com/in/henrique-erdei-442b09200/details/certifications/",
   },
 
   {
-    id: "cert-tableau",
+    id: "cursos-dados-cloud",
     kind: "credential",
-    period: "2023",
-    org: "Tableau",
+    period: "2020 – 2024",
+    org: "ENAP · Mackenzie · AWS · Fundação Bradesco · outros",
     title: {
-      pt: "Tableau Desktop Specialist",
-      en: "Tableau Desktop Specialist",
-      es: "Tableau Desktop Specialist",
+      pt: "Cursos — dados, cloud e gestão",
+      en: "Courses — data, cloud and management",
+      es: "Cursos — datos, cloud y gestión",
     },
     notes: {
-      pt: ["Certificação em visualização e exploração de dados com Tableau Desktop."],
-      en: ["Certification in data visualisation and exploration with Tableau Desktop."],
-      es: ["Certificación en visualización y exploración de datos con Tableau Desktop."],
+      pt: [
+        "Power BI e modelagem: ENAP, Noble Work, Alura e Fundação Bradesco (modelagem e administração de bancos de dados).",
+        "Cloud e infra: AWS (IoT, development tools), Cisco Linux, Oracle Foundations, Acronis (cloud e cybersecurity).",
+        "Gestão: Mackenzie — Agile, projetos, decisão por dados, IA aplicada e pipeline DevOps (iniciante).",
+      ],
+      en: [
+        "Power BI and modelling: ENAP, Noble Work, Alura and Fundação Bradesco (data modelling and database administration).",
+        "Cloud and infra: AWS (IoT, development tools), Cisco Linux, Oracle Foundations, Acronis (cloud and cybersecurity).",
+        "Management: Mackenzie — Agile, projects, data-driven decisions, applied AI and DevOps pipeline (beginner).",
+      ],
+      es: [
+        "Power BI y modelado: ENAP, Noble Work, Alura y Fundação Bradesco (modelado de datos y administración de bases).",
+        "Cloud e infra: AWS (IoT, development tools), Cisco Linux, Oracle Foundations, Acronis (cloud y ciberseguridad).",
+        "Gestión: Mackenzie — Agile, proyectos, decisión por datos, IA aplicada y pipeline DevOps (principiante).",
+      ],
     },
+    url: "https://www.linkedin.com/in/henrique-erdei-442b09200/details/certifications/",
   },
 ]
