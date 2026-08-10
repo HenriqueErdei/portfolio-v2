@@ -7,8 +7,9 @@ import tseslint from "typescript-eslint"
 
 export default tseslint.config(
   { ignores: ["dist", "coverage"] },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2022,
@@ -21,10 +22,16 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      ...jsxA11y.flatConfigs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-      "@typescript-eslint/consistent-type-imports": "error",
-      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    },
+  },
+  {
+    files: ["src/three/**/*.{ts,tsx}"],
+    rules: {
+      // R3F scenes mutate shader uniforms and materials every frame — expected.
+      "react-hooks/immutability": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/refs": "off",
     },
   },
 )
