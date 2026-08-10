@@ -1,44 +1,47 @@
 import type { Profile } from "./types"
 
 /**
- * Preenchido a partir do perfil público e do portfólio anterior
- * (github.com/HenriqueErdei/Portfolio).
+ * Positioning: senior full-stack engineer for US / remote hiring.
+ * Data science and BI stay in trajectory and skills — not the headline.
  */
 export const profile: Profile = {
   name: "Henrique Erdei",
   handle: "@HenriqueErdei",
 
   role: {
-    pt: "Engenheiro Full-Stack & Especialista em Dados",
-    en: "Full-Stack Engineer & Data Specialist",
-    es: "Ingeniero Full-Stack & Especialista en Datos",
+    pt: "Engenheiro Full-Stack Sênior",
+    en: "Senior Full-Stack Engineer",
+    es: "Ingeniero Full-Stack Senior",
   },
 
-  location: "Santo André, SP, Brasil",
+  location: "São Paulo, Brazil",
   timezone: "America/Sao_Paulo",
 
   email: "henriqueerdeijob@gmail.com",
+  phone: "11925815808",
 
   headline: {
-    pt: ["Eu transformo", "dado bruto", "em decisão."],
-    en: ["I turn", "raw data", "into decisions."],
-    es: ["Convierto", "datos crudos", "en decisiones."],
+    pt: ["Produtos web", "prontos para produção,", "de ponta a ponta."],
+    en: ["Production-ready", "web products,", "owned end to end."],
+    es: ["Productos web", "listos para producción,", "de punta a punta."],
   },
 
   bio: {
     pt: [
-      "Trabalho nas duas pontas do mesmo problema: construo o sistema que coleta e organiza o dado, e construo a interface que faz alguém entender o que ele está dizendo. Na prática isso vai de um back-end em Python e Flask até um painel que um gestor abre na segunda-feira e sabe o que fazer.",
-      "Gosto de projeto que termina em decisão, não em gráfico bonito. Por isso a maior parte do que eu construo nasce de uma pergunta de negócio — quanto está entrando, onde está travando, o que precisa de atenção esta semana — e só depois vira arquitetura, modelo de dados e tela.",
+      "Engenheiro full-stack com foco em TypeScript, React, Node.js e PostgreSQL — da modelagem de dados à interface, com contratos de API claros e código que aguenta revisão em time sênior.",
+      "Background em Data Science e BI (Power BI, Python, modelagem). Isso entra como repertório: decisões de produto, métricas e arquitetura saem mais maduras quando dado e UX são tratados como um sistema.",
     ],
     en: [
-      "I work on both ends of the same problem: I build the system that collects and organises the data, and I build the interface that makes someone understand what it is saying. In practice that runs from a Python and Flask back-end to a dashboard a manager opens on Monday and knows what to do next.",
-      "I like projects that end in a decision, not in a pretty chart. Most of what I build starts from a business question — what is coming in, where it is stuck, what needs attention this week — and only then becomes architecture, a data model and a screen.",
+      "Full-stack engineer focused on TypeScript, React, Node.js and PostgreSQL — from data modeling and API design through polished UI, with code that holds up in senior team review.",
+      "Background in Data Science and BI (Power BI, Python, modeling). That shows up as stronger product judgment: metrics, contracts and architecture land better when data and UX are treated as one system.",
     ],
     es: [
-      "Trabajo en los dos extremos del mismo problema: construyo el sistema que recoge y organiza el dato, y construyo la interfaz que hace que alguien entienda lo que está diciendo. En la práctica eso va de un back-end en Python y Flask hasta un panel que un gestor abre el lunes y ya sabe qué hacer.",
-      "Me gustan los proyectos que terminan en una decisión, no en un gráfico bonito. Casi todo lo que construyo nace de una pregunta de negocio — cuánto está entrando, dónde se traba, qué necesita atención esta semana — y solo después se vuelve arquitectura, modelo de datos y pantalla.",
+      "Ingeniero full-stack enfocado en TypeScript, React, Node.js y PostgreSQL — del modelado de datos y diseño de API a una UI pulida, con código que aguanta revisión en equipos senior.",
+      "Formación en Data Science y BI (Power BI, Python, modelado). Eso suma criterio de producto: métricas, contratos y arquitectura mejoran cuando dato y UX se tratan como un solo sistema.",
     ],
   },
+
+  focusStack: ["TypeScript", "React", "Node.js", "PostgreSQL", "AWS"],
 
   available: true,
 
