@@ -10,6 +10,7 @@
 .room {
   position: relative;
   isolation: isolate;
+  --intro-progress: 1;
 }
 
 /* The WebGL scene sits below the grid and the vignette. */
@@ -18,6 +19,8 @@
   inset: 0;
   z-index: -3;
   pointer-events: none;
+  opacity: calc(0.04 + var(--intro-progress) * 0.96);
+  transition: opacity 100ms linear;
 }
 
 /* Faint engineering grid. Painted with gradients instead of an image so it
@@ -32,10 +35,18 @@
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 35%, transparent 100%);
+  opacity: calc(0.25 + var(--intro-progress) * 0.75);
+  transition: opacity 120ms linear;
 }
 
-/* Softens the edges without swallowing the geogram. In console the old
-   bottom-heavy vignette read as a hard black crop on the tower tips. */
+/* When WebGL is off (mobile, reduced motion, no GPU), lean on the CSS grid. */
+.room[data-scene="off"] .room-grid {
+  --grid-line: rgb(107 163 199 / 9%);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 130% 100% at 50% 0%, #000 48%, transparent 100%);
+}
+
+/* Softens the edges without swallowing the content. */
 .room-vignette {
   position: fixed;
   inset: 0;
@@ -47,21 +58,49 @@
     color-mix(in oklab, var(--c-void-deep) 70%, transparent) 78%,
     var(--c-void-deep) 100%
   );
-  opacity: calc(var(--glow-strength) * 0.55);
+  opacity: calc((0.25 + var(--intro-progress) * 0.75) * var(--glow-strength) * 0.4 + 0.12);
+  transition: opacity 120ms linear;
 }
 
 .shell {
   width: 100%;
-  max-width: 84rem;
+  max-width: 72rem;
   margin-inline: auto;
-  padding-inline: clamp(1.25rem, 4vw, 4rem);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.site-header nav {
+  scrollbar-width: none;
+}
+
+.site-header nav::-webkit-scrollbar {
+  display: none;
+}
+
+.lang-switch-btn {
+  display: grid;
+  place-items: center;
+  padding: 0.35rem 0.45rem;
+  line-height: 0;
+}
+
+.lang-switch-flag {
+  display: block;
+  width: 1.25rem;
+  height: auto;
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 10%);
+}
+
+.lang-switch-btn[aria-pressed="true"] .lang-switch-flag {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--c-sig) 50%, transparent);
 }
 
 /* ---------- stage (a section of the launch sequence) ---------- */
 
 .stage {
   position: relative;
-  padding-block: clamp(5rem, 12vh, 9rem);
+  padding-block: clamp(4.5rem, 10vh, 7.5rem);
   border-top: 1px solid var(--c-line-soft);
 }
 
@@ -73,8 +112,9 @@
 
 .panel {
   position: relative;
-  background: color-mix(in oklab, var(--c-panel) 88%, transparent);
-  border: 1px solid var(--c-line);
+  background: color-mix(in oklab, var(--c-panel) 92%, transparent);
+  border: 1px solid var(--c-line-soft);
+  border-radius: 2px;
   backdrop-filter: blur(var(--panel-blur));
 }
 
@@ -113,9 +153,241 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--c-line);
-  background: color-mix(in oklab, var(--c-ink) 3%, transparent);
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--c-line-soft);
+  background: color-mix(in oklab, var(--c-ink) 2%, transparent);
+}
+
+/* ---------- section headers (editorial) ---------- */
+
+.section-header {
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  max-width: 40rem;
+}
+
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-readout);
+  letter-spacing: var(--tracking-console);
+  text-transform: uppercase;
+  color: var(--c-sig);
+}
+
+.section-title {
+  margin-top: 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--c-ink);
+}
+
+.section-subtitle {
+  margin-top: 1rem;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--c-ink-dim);
+}
+
+@media (min-width: 768px) {
+  .section-subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* ---------- site header ---------- */
+
+.site-header {
+  border-bottom-color: var(--c-line-soft);
+  background: color-mix(in oklab, var(--c-void) 88%, transparent);
+}
+
+.site-brand {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  transition: color 200ms var(--ease-hold);
+}
+
+.site-brand:hover,
+.site-brand:focus-visible {
+  color: var(--c-sig);
+}
+
+.site-nav-link {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--c-ink-faint);
+  transition: color 200ms var(--ease-hold);
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible {
+  color: var(--c-ink);
+}
+
+.site-nav-link[aria-current="true"] {
+  color: var(--c-sig);
+}
+
+/* ---------- buttons ---------- */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6875rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--c-void);
+  background: var(--c-sig);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  transition:
+    opacity 200ms var(--ease-hold),
+    transform 200ms var(--ease-launch);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  opacity: 0.92;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6875rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+  background: transparent;
+  border: 1px solid var(--c-line);
+  border-radius: 2px;
+  transition:
+    border-color 200ms var(--ease-hold),
+    color 200ms var(--ease-hold);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  border-color: var(--c-sig);
+  color: var(--c-sig);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-ink-dim);
+  transition: color 200ms var(--ease-hold);
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  color: var(--c-sig);
+}
+
+/* ---------- hero ---------- */
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  border: 1px solid var(--c-line-soft);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--c-panel) 60%, transparent);
+}
+
+.hero-role {
+  margin-top: 1.25rem;
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--c-sig);
+}
+
+.hero-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.hero-stack-item {
+  padding: 0.375rem 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--c-ink-dim);
+  border: 1px solid var(--c-line-soft);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--c-panel) 50%, transparent);
+}
+
+/* ---------- spec & timeline ---------- */
+
+.spec-card {
+  border-radius: 2px;
+}
+
+.spec-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-faint);
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--c-line-soft);
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 1.35rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-sig);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c-sig) 18%, transparent);
+}
+
+.skill-card {
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--c-panel) 88%, transparent);
+  border: 1px solid var(--c-line-soft);
+}
+
+.skill-group-title {
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
 }
 
 /* ---------- readouts ---------- */
@@ -144,7 +416,7 @@
   height: 0.5rem;
   border-radius: 50%;
   background: currentColor;
-  box-shadow: 0 0 calc(8px * var(--glow-strength)) currentColor;
+  box-shadow: none;
 }
 
 .lamp-pulse::after {
@@ -200,7 +472,7 @@
 
 .gauge-segment[data-on="true"] {
   background: currentColor;
-  box-shadow: 0 0 calc(6px * var(--glow-strength)) currentColor;
+  box-shadow: none;
 }
 
 /* ---------- hairlines & rules ---------- */
@@ -303,11 +575,37 @@
   visibility: hidden;
 }
 
+.boot-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 88% 70% at 50% 40%,
+    color-mix(in oklab, var(--c-sig) 32%, transparent) 0%,
+    color-mix(in oklab, var(--c-sig) 12%, transparent) 42%,
+    transparent 72%
+  );
+  mix-blend-mode: screen;
+}
+
 .boot-flash {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 42%, #fff 0%, color-mix(in oklab, var(--c-sig) 70%, #fff) 22%, color-mix(in oklab, var(--c-sig) 35%, transparent) 55%, transparent 72%);
   pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      #fff 0%,
+      color-mix(in oklab, var(--c-sig) 62%, #fff) 18%,
+      color-mix(in oklab, var(--c-sig) 28%, transparent) 48%,
+      transparent 72%
+    ),
+    radial-gradient(
+      circle at 50% 42%,
+      transparent 22%,
+      color-mix(in oklab, var(--c-sig) 16%, transparent) 44%,
+      transparent 68%
+    );
   mix-blend-mode: screen;
 }
 
@@ -339,72 +637,10 @@
     animation: none;
   }
 
+  .boot-wash,
   .boot-flash {
     display: none;
   }
-}
-
-/* ---------- cargo bay (the stack playground) ---------- */
-
-.cargo-bay {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.875rem;
-  /* Faint dot field, so the modules read as floating in something. */
-  background-image: radial-gradient(var(--grid-line) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
-
-.cargo-bay-live {
-  display: block;
-  height: clamp(15rem, 36vh, 22rem);
-  padding: 0;
-}
-
-/* Held back until the first frame has positioned everything, or the modules
-   flash in the top-left corner before the simulation starts. */
-.cargo-bay-live .cargo-chip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: grab;
-  opacity: 0;
-  transition: opacity 400ms var(--ease-hold);
-}
-
-.cargo-bay-live[data-ready="true"] .cargo-chip {
-  opacity: 1;
-}
-
-.cargo-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.7rem;
-  border: 1px solid var(--c-line);
-  background: color-mix(in oklab, var(--c-panel-raised) 92%, transparent);
-  color: var(--c-ink);
-  font-size: 0.8125rem;
-  white-space: nowrap;
-  user-select: none;
-  /* The module owns the gesture; the page keeps its scroll. */
-  touch-action: none;
-  transition:
-    border-color 200ms var(--ease-hold),
-    box-shadow 200ms var(--ease-hold);
-}
-
-.cargo-chip:hover {
-  border-color: var(--chip);
-  box-shadow: 0 0 20px -8px var(--chip);
-}
-
-.cargo-chip[data-held="true"] {
-  cursor: grabbing;
-  border-color: var(--chip);
-  box-shadow: 0 0 26px -6px var(--chip);
 }
 
 /* ---------- reticle cursor ---------- */
@@ -414,6 +650,23 @@
 .reticle-on,
 .reticle-on * {
   cursor: none;
+}
+
+/* Restore the system cursor while the snake modal is open. */
+html.snake-open.reticle-on,
+html.snake-open.reticle-on * {
+  cursor: auto;
+}
+
+html.snake-open.reticle-on button,
+html.snake-open.reticle-on a,
+html.snake-open.reticle-on [role="button"] {
+  cursor: pointer;
+}
+
+html.snake-open .reticle {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .reticle-on input,
@@ -472,7 +725,7 @@
   width: 3px;
   height: 3px;
   background: var(--c-sig);
-  box-shadow: 0 0 calc(6px * var(--glow-strength)) var(--c-sig);
+  box-shadow: none;
   transition: all 240ms var(--ease-launch);
 }
 
@@ -541,10 +794,51 @@
 }
 
 .palette-list {
-  flex: 1;
+  flex: 1 1 auto;
+  /* Without this, a flex child ignores max-height and never scrolls. */
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding-block: 0.375rem;
+  scrollbar-gutter: stable;
+}
+
+/* Scrollbar — thin, themed, not the browser default slab. */
+.palette-list,
+.scroll-surface {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--c-ink) 24%, transparent) transparent;
+}
+
+.palette-list::-webkit-scrollbar,
+.scroll-surface::-webkit-scrollbar {
+  width: 7px;
+}
+
+.palette-list::-webkit-scrollbar-track,
+.scroll-surface::-webkit-scrollbar-track {
+  margin-block: 0.35rem;
+  background: transparent;
+}
+
+.palette-list::-webkit-scrollbar-thumb,
+.scroll-surface::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--c-ink) 22%, transparent);
+  background-clip: padding-box;
+  transition: background 160ms var(--ease-hold);
+}
+
+.palette-list::-webkit-scrollbar-thumb:hover,
+.scroll-surface::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--c-sig) 50%, var(--c-ink) 12%);
+  background-clip: padding-box;
+}
+
+.palette-list::-webkit-scrollbar-corner,
+.scroll-surface::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .palette-group {
@@ -601,6 +895,184 @@
   }
 }
 
+/* ---------- snake easter egg ---------- */
+
+.snake-root {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(0.5rem, 2vh) max(0.75rem, 3vw);
+  cursor: auto;
+}
+
+.snake-panel {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: min(44rem, 96vw);
+  max-height: min(96vh, 920px);
+  flex-direction: column;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  overflow-y: auto;
+  background: color-mix(in oklab, var(--c-panel-raised) 96%, transparent);
+  box-shadow: 0 24px 70px -18px color-mix(in oklab, var(--c-void-deep) 90%, transparent);
+  animation: palette-rise 240ms var(--ease-launch);
+}
+
+.snake-game {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.snake-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.snake-title {
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--c-ink);
+}
+
+.snake-close {
+  padding: 0.35rem;
+}
+
+.snake-hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.snake-board {
+  position: relative;
+  width: 100%;
+  max-height: min(68vh, 640px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-color: var(--c-line-soft);
+  touch-action: none;
+  user-select: none;
+}
+
+.snake-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 640px) {
+  .snake-board {
+    max-height: min(56vw, 58vh);
+  }
+
+  .snake-hint {
+    font-size: 0.625rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .snake-board {
+    max-height: min(62vh, 640px);
+  }
+}
+
+.snake-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  background: color-mix(in oklab, var(--c-void-deep) 72%, transparent);
+  backdrop-filter: blur(2px);
+  pointer-events: auto;
+}
+
+.snake-overlay-end .snake-overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.snake-game-over {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+}
+
+.snake-countdown-value {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 14vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--c-sig);
+  text-shadow: 0 0 40px color-mix(in oklab, var(--c-sig) 35%, transparent);
+  animation: snake-countdown-pop 480ms var(--ease-launch);
+}
+
+@keyframes snake-countdown-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snake-countdown-value {
+    animation: none;
+  }
+}
+
+.snake-hint {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snake-panel {
+    animation: none;
+  }
+}
+
+/* Full-screen jumpscare on snake death. Image: public/easter-egg/susto.jpeg */
+.snake-scare {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  background: #000;
+  pointer-events: none;
+}
+
+.snake-scare img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ---------- accessibility helpers ---------- */
 
 .sr-only {
@@ -631,7 +1103,36 @@
   transform: none;
 }
 
-/* Hero held back until the entry blast hands the stage over. */
+/* ---------- hero enter (first visit) ---------- */
+
+.stage:not([data-hero-enter="true"]) .hero-enter {
+  opacity: 1;
+  transform: none;
+}
+
+.stage[data-hero-enter="true"] .hero-enter {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: hero-enter 820ms var(--ease-launch) forwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+@keyframes hero-enter {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage[data-hero-enter="true"] .hero-enter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Hero held back until the intro hands the stage over. */
 .stage[data-preboot="true"] {
   opacity: 0;
   pointer-events: none;
@@ -639,11 +1140,18 @@
 
 .stage[data-preboot="false"] {
   opacity: 1;
-  transition: opacity 700ms var(--ease-launch);
+  transition: opacity 560ms var(--ease-launch);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .stage[data-preboot="false"] {
+    transition: none;
+  }
+
+  .scene-canvas,
+  .room-grid,
+  .room-vignette {
+    opacity: 1;
     transition: none;
   }
 }
