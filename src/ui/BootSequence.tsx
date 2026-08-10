@@ -6,26 +6,23 @@ import {
   cancelIntro,
   getIntroPhase,
   getIntroProgress,
+  introBlastGlow,
+  introShockwave,
+  introShockwaveEcho,
   playIntro,
   subscribeToIntro,
 } from "@/lib/intro"
 import { APPLE_KEYS } from "@/lib/palette"
 import { setScrollLocked } from "@/lib/scrollTo"
-import { flash } from "@/three/sequence"
 import { LinearGauge } from "./Gauge"
 import { Lamp } from "./Lamp"
 
 const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
 
-/** Hard ceiling so a hung font or a dead WebGL probe cannot trap the visitor. */
 const CEILING = 4200
+const MIN_BOOT_MS = 900
 
-/**
- * Real readiness checks. The meter only advances when something the page
- * actually needs has settled — same honesty as before, now feeding a launch
- * rather than a fade-out.
- */
-const CHECKS = [
+const ALL_CHECKS = [
   {
     id: "systems",
     settle: () =>
@@ -37,9 +34,6 @@ const CHECKS = [
   {
     id: "scene",
     settle: async () => {
-      // Give the idle callback that mounts the Canvas a beat to fire, then wait
-      // for the canvas itself. Without WebGL we still resolve — the intro then
-      // skips the blast on its own via reduced-power paths.
       if (!shouldRenderScene()) return
 
       const deadline = performance.now() + 1800
@@ -51,24 +45,24 @@ const CHECKS = [
   },
 ] as const
 
-type CheckId = (typeof CHECKS)[number]["id"]
+type CheckId = (typeof ALL_CHECKS)[number]["id"]
 type Phase = "checklist" | "launch" | "clearing"
 
-/**
- * Entry boot, Portfolio-b pattern: a checklist while the page comes up, then the
- * 3D sequence plays through the transparent shell (bolt → impact → cascade),
- * the hero is revealed mid-settling, and only then is the page unlocked.
- *
- * Once per session. Returning visitors land straight on the cascade.
- */
+function bootChecks() {
+  return shouldRenderScene() ? ALL_CHECKS : ALL_CHECKS.filter((check) => check.id !== "scene")
+}
+
 export function BootSequence() {
   const { t } = useI18n()
 
+  const [checks] = useState(() => bootChecks())
+  const [useCssBlast] = useState(() => !shouldRenderScene())
   const [skipped] = useState(() => getIntroPhase() === "done")
   const [done, setDone] = useState<readonly CheckId[]>([])
   const [phase, setPhase] = useState<Phase>("checklist")
   const [gone, setGone] = useState(false)
-  const [blast, setBlast] = useState(0)
+  const [flash, setFlash] = useState(0)
+  const [wash, setWash] = useState(0)
 
   useEffect(() => {
     if (skipped) return
@@ -81,7 +75,7 @@ export function BootSequence() {
       if (cancelled) return
       setPhase("clearing")
       setScrollLocked(false)
-      await wait(520)
+      await wait(560)
       if (!cancelled) setGone(true)
     }
 
@@ -89,14 +83,18 @@ export function BootSequence() {
       if (cancelled) return
       setPhase("launch")
 
-      // The clock that drives the strike also drives the white flash over the
-      // lens — same beat Portfolio-b fires as the camera leaves the roof.
-      const off = subscribeToIntro(() => setBlast(flash(getIntroProgress())))
+      const off = subscribeToIntro(() => {
+        const clock = getIntroProgress()
+        setFlash(introBlastGlow(clock))
+        setWash(introShockwave(clock) * 0.48 + introShockwaveEcho(clock) * 0.32)
+      })
 
       try {
         await playIntro()
       } finally {
         off()
+        setFlash(0)
+        setWash(0)
       }
 
       await finish()
@@ -107,14 +105,14 @@ export function BootSequence() {
     }, CEILING)
 
     void Promise.all(
-      CHECKS.map(async (check) => {
+      checks.map(async (check) => {
         await check.settle()
         if (!cancelled) setDone((current) => (current.includes(check.id) ? current : [...current, check.id]))
       }),
     ).then(async () => {
-      // A short hold so the last lamp can be read before the charge starts.
-      const dwell = prefersReducedMotion() ? 120 : 520
-      await wait(Math.max(0, dwell - (performance.now() - started)))
+      const dwell = prefersReducedMotion() ? 80 : 360
+      const elapsed = performance.now() - started
+      await wait(Math.max(MIN_BOOT_MS - elapsed, dwell, 0))
       window.clearTimeout(ceiling)
       await launch()
     })
@@ -125,11 +123,11 @@ export function BootSequence() {
       cancelIntro()
       setScrollLocked(false)
     }
-  }, [skipped])
+  }, [checks, skipped])
 
   if (skipped || gone) return null
 
-  const ready = done.length === CHECKS.length
+  const ready = done.length === checks.length
   const launching = phase === "launch" || phase === "clearing"
 
   return (
@@ -140,9 +138,16 @@ export function BootSequence() {
       role="status"
       aria-label={t.boot.label}
     >
-      {/* Flash sits above the checklist so the detonation washes the whole lens,
-          then clears into the cascade underneath. */}
-      <div aria-hidden="true" className="boot-flash" style={{ opacity: blast }} />
+      {launching ? (
+        <>
+          <div aria-hidden="true" className="boot-wash" style={{ opacity: wash }} />
+          <div
+            aria-hidden="true"
+            className="boot-flash"
+            style={{ opacity: useCssBlast ? flash : flash * 0.55 }}
+          />
+        </>
+      ) : null}
 
       <div className="boot-panel panel panel-ticks" data-hidden={launching}>
         <div className="panel-head">
@@ -151,7 +156,7 @@ export function BootSequence() {
         </div>
 
         <ul className="flex flex-col gap-3 p-5">
-          {CHECKS.map((check) => {
+          {checks.map((check) => {
             const complete = done.includes(check.id)
             return (
               <li key={check.id} className="flex items-center justify-between gap-6">
@@ -174,7 +179,11 @@ export function BootSequence() {
         </ul>
 
         <div className="px-5 pb-5">
-          <LinearGauge value={done.length / CHECKS.length} label={t.boot.label} className="text-sig" />
+          <LinearGauge
+            value={done.length / checks.length}
+            label={t.boot.label}
+            className="text-sig"
+          />
         </div>
 
         <p className="flex items-center gap-2 border-t border-line px-5 py-3">

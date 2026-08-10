@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "./tokens.css";
 @import "./console.css";
-@import "./prose.css";
 
 @layer base {
   *,

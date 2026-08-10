@@ -51,17 +51,23 @@ export function Missions() {
         subtitle={t.work.subtitle}
       />
 
-      <ul className="flex flex-col gap-4">
-        {missions.map((mission, index) => (
-          <Reveal key={mission.id} as="li" delay={index * 60}>
-            <MissionPanel
-              mission={mission}
-              open={openId === mission.id}
-              onToggle={() => setOpenId((current) => (current === mission.id ? null : mission.id))}
-            />
-          </Reveal>
-        ))}
-      </ul>
+      {missions.length === 0 ? (
+        <Panel>
+          <p className="p-6 text-base leading-relaxed text-ink-dim md:p-8">{t.work.empty}</p>
+        </Panel>
+      ) : (
+        <ul className="flex flex-col gap-4">
+          {missions.map((mission, index) => (
+            <Reveal key={mission.id} as="li" delay={index * 60}>
+              <MissionPanel
+                mission={mission}
+                open={openId === mission.id}
+                onToggle={() => setOpenId((current) => (current === mission.id ? null : mission.id))}
+              />
+            </Reveal>
+          ))}
+        </ul>
+      )}
     </Stage>
   )
 }

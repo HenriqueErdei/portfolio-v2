@@ -1,6 +1,7 @@
 import { useFrame, useThree } from "@react-three/fiber"
 import { useEffect, useMemo, type RefObject } from "react"
 import * as THREE from "three"
+import { mulberry32 } from "./random"
 import { DUST_FRAGMENT, DUST_VERTEX } from "./shaders"
 import { useThemeTokens } from "./tokens"
 
@@ -10,7 +11,7 @@ import { useThemeTokens } from "./tokens"
  * separates them by parallax and the background gains depth for free.
  */
 
-const COUNT = 1400
+const COUNT = 220
 
 export function Dust({ progress }: { progress: RefObject<number> }) {
   const tokens = useThemeTokens()
@@ -21,18 +22,20 @@ export function Dust({ progress }: { progress: RefObject<number> }) {
     const sizes = new Float32Array(COUNT)
     const seeds = new Float32Array(COUNT)
 
+    const random = mulberry32(0xd057)
+
     for (let index = 0; index < COUNT; index += 1) {
-      const radius = 40 + Math.random() * 90
-      const theta = Math.random() * Math.PI * 2
-      const phi = Math.acos(2 * Math.random() - 1)
+      const radius = 40 + random() * 90
+      const theta = random() * Math.PI * 2
+      const phi = Math.acos(2 * random() - 1)
 
       positions[index * 3] = radius * Math.sin(phi) * Math.cos(theta)
       positions[index * 3 + 1] = radius * Math.cos(phi)
       positions[index * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta)
 
       // Squared so most motes are faint and only a handful are bright.
-      sizes[index] = 0.4 + Math.random() ** 2 * 2.4
-      seeds[index] = Math.random()
+      sizes[index] = 0.4 + random() ** 2 * 2.4
+      seeds[index] = random()
     }
 
     const buffer = new THREE.BufferGeometry()

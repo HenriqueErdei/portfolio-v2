@@ -1,37 +1,32 @@
 /*
- * Two themes: `console` is the dark, backlit one where the neon accents actually
- * emit, `daylight` is the same palette printed on paper. Every raw value lives
- * here; components only ever reference the semantic aliases below.
+ * Two themes: `console` is the dark workspace; `daylight` is the same palette on
+ * paper. Every raw value lives here; components only reference semantic aliases.
  */
 
 :root,
 [data-theme="console"] {
   color-scheme: dark;
 
-  /* Surfaces run cold and blue rather than neutral grey, so the two accents read
-     as emitted light instead of paint. */
-  --c-void: #04060e;
-  --c-void-deep: #020409;
-  --c-panel: #080d18;
-  --c-panel-raised: #0d1424;
-  --c-line: #1e2b45;
-  --c-line-soft: #141d30;
+  /* Neutral slate base — reads as senior product engineering, not sci-fi HUD. */
+  --c-void: #0b0d12;
+  --c-void-deep: #07080c;
+  --c-panel: #111318;
+  --c-panel-raised: #161a22;
+  --c-line: #252a35;
+  --c-line-soft: #1a1f28;
 
-  --c-ink: #dfe7f5;
-  --c-ink-dim: #8496b8;
-  --c-ink-faint: #55637f;
+  --c-ink: #eef0f4;
+  --c-ink-dim: #9aa3b5;
+  --c-ink-faint: #6b7589;
 
-  /* Two accents, far enough apart in hue to pair without muddying: electric blue
-     carries everything structural, violet is the second voice. Amber and red are
-     held back for the only two states allowed to interrupt you. */
-  --c-sig: #38d9ff;
-  --c-plasma: #a06bff;
-  --c-warn: #ffc24d;
-  --c-crit: #ff4d6d;
+  --c-sig: #4d9fff;
+  --c-plasma: #7c6fd6;
+  --c-warn: #e5a845;
+  --c-crit: #ef5f7a;
 
-  --grid-line: rgb(120 180 255 / 5%);
-  --glow-strength: 0.85;
-  --panel-blur: 10px;
+  --grid-line: rgb(255 255 255 / 4%);
+  --glow-strength: 0.12;
+  --panel-blur: 8px;
 }
 
 [data-theme="daylight"] {
@@ -50,8 +45,8 @@
 
   /* Darkened hard for contrast on paper. Neon is light, and light on white is
      nothing — the light theme keeps the hues and gives up the glow. */
-  --c-sig: #0a63c9;
-  --c-plasma: #6d28d9;
+  --c-sig: #2563eb;
+  --c-plasma: #5b21b6;
   --c-warn: #9a5b00;
   --c-crit: #c02a22;
 
@@ -83,9 +78,9 @@
   /* A single modular scale keeps every readout on the same rhythm. */
   --text-readout: 0.6875rem;
   --text-readout--line-height: 1.2;
-  --text-readout--letter-spacing: 0.14em;
+  --text-readout--letter-spacing: 0.12em;
 
-  --tracking-console: 0.18em;
+  --tracking-console: 0.14em;
 
   --ease-launch: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-hold: cubic-bezier(0.65, 0, 0.35, 1);

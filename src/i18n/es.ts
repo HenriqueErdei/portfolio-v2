@@ -1,9 +1,5 @@
 import type { Dict } from "./dict"
 
-/**
- * `Dict` is derived from the Portuguese source, so a missing or misspelled key is
- * a compile error here rather than a blank string on the page.
- */
 export const es: Dict = {
   meta: {
     localeName: "Español",
@@ -19,7 +15,7 @@ export const es: Dict = {
     langSwitch: "Cambiar idioma",
     soundToggle: "Activar o desactivar el sonido de la interfaz",
     sceneLabel:
-      "Animación decorativa: un rayo geométrico golpea el geograma y se deshace en cristales al cargar la página.",
+      "Fondo decorativo: cuadrícula suave y partículas discretas que siguen el scroll.",
     progressLabel: "Progreso de la página",
     externalLink: "abre en una pestaña nueva",
   },
@@ -30,8 +26,8 @@ export const es: Dict = {
   },
 
   palette: {
-    open: "Abrir la consola de comandos",
-    title: "Consola de comandos",
+    open: "Abrir la paleta de comandos",
+    title: "Paleta de comandos",
     placeholder: "Buscar sección, proyecto o comando",
     empty: "Ningún comando coincide con esa búsqueda.",
     resultsLabel: "Comandos disponibles",
@@ -52,59 +48,66 @@ export const es: Dict = {
     soundOn: "Sonido activado",
     soundOff: "Sonido desactivado",
     copyEmail: "Copiar correo",
+    copyPhone: "Copiar teléfono",
     copied: "Correo copiado",
-    active: "en uso",
+    active: "in use",
   },
 
   boot: {
-    label: "Prevuelo",
+    label: "Cargando",
     ok: "OK",
-    hint: "abre la consola de comandos",
+    hint: "abre la paleta de comandos",
     step: {
-      systems: "Sistemas",
+      systems: "Recursos",
       type: "Tipografía",
-      scene: "Escena 3D",
-      ready: "Listo para lanzar",
+      scene: "Fondo",
+      ready: "Listo",
     },
   },
 
   nav: {
     intro: "Inicio",
     about: "Sobre",
-    path: "Trayectoria",
+    path: "Experiencia",
     work: "Proyectos",
-    stack: "Stack",
-    notes: "Notas",
+    stack: "Skills",
     contact: "Contacto",
   },
 
   intro: {
-    designation: "00",
+    designation: "Inicio",
     title: "Inicio",
-    available: "Disponible para proyectos",
+    available: "Disponible para oportunidades",
     unavailable: "Sin disponibilidad ahora",
-    scrollHint: "Desplaza para empezar",
-    basedIn: "Lugar",
-    primaryCta: "Ver proyectos",
-    secondaryCta: "Hablar conmigo",
+    scrollHint: "Desplaza para continuar",
+    basedIn: "Ubicación",
+    remoteFriendly: "Remoto · solapamiento US/EU",
+    stackLabel: "Stack central",
+    primaryCta: "Ver experiencia",
+    secondaryCta: "Contactar",
+    resumeCta: "Descargar CV",
   },
 
   about: {
-    designation: "01",
+    designation: "Sobre",
     title: "Sobre",
-    subtitle: "Quién está del otro lado, y cómo trabajo.",
+    subtitle:
+      "Ingeniero full-stack senior — producto, API e interfaz con el mismo estándar de calidad.",
     spec: {
       role: "Rol",
-      location: "Lugar",
-      availability: "Estado",
+      location: "Ubicación",
+      timezone: "Zona horaria",
+      timezoneValue: "UTC-3 (BRT)",
+      availability: "Disponibilidad",
+      email: "Correo",
       handle: "Usuario",
     },
   },
 
   path: {
-    designation: "02",
-    title: "Trayectoria",
-    subtitle: "El camino hasta aquí, en orden de llegada.",
+    designation: "Experiencia",
+    title: "Experiencia",
+    subtitle: "Historial profesional, formación y certificaciones relevantes.",
     kind: {
       work: "Trabajo",
       education: "Formación",
@@ -114,9 +117,11 @@ export const es: Dict = {
   },
 
   work: {
-    designation: "03",
+    designation: "Proyectos",
     title: "Proyectos",
-    subtitle: "Abre un proyecto para ver el detalle completo.",
+    subtitle: "Casos seleccionados con impacto medible — se publican conforme estén listos.",
+    empty:
+      "Nuevos case studies en preparación. Historial completo en Experiencia y en el CV.",
     status: {
       orbital: "En línea",
       ascent: "En construcción",
@@ -127,8 +132,8 @@ export const es: Dict = {
       ascent: "En construcción ahora",
       archived: "Concluido, sin mantenimiento activo",
     },
-    expand: "Abrir detalles",
-    collapse: "Cerrar detalles",
+    expand: "Ver detalles",
+    collapse: "Ocultar detalles",
     repo: "Código",
     demo: "Ver en vivo",
     caseStudy: "Estudio de caso",
@@ -137,41 +142,28 @@ export const es: Dict = {
   },
 
   stack: {
-    designation: "04",
-    title: "Stack",
-    subtitle: "Las herramientas que de verdad uso, con nivel honesto.",
+    designation: "Skills",
+    title: "Skills",
+    subtitle: "Herramientas que uso en producción, con nivel de dominio honesto.",
     levelLabel: "Nivel",
     sinceLabel: "Desde",
-    bayLabel: "Bahía de carga",
-    bayHint: "Arrastra — gravedad cero",
     group: {
       guidance: "Lenguajes",
-      structure: "Back-end y datos",
-      propulsion: "Interfaz",
+      structure: "Back-end y base de datos",
+      propulsion: "Front-end y mobile",
       comms: "APIs e integraciones",
       ground: "Infra y herramientas",
     },
   },
 
-  notes: {
-    designation: "05",
-    title: "Notas",
-    subtitle: "Notas técnicas de lo que aprendí construyendo.",
-    readMore: "Leer nota",
-    backToNotes: "Volver a las notas",
-    empty: "Ninguna nota publicada todavía.",
-    minuteRead: "min de lectura",
-    publishedOn: "Publicado el",
-  },
-
   contact: {
-    designation: "06",
-    titleA: "Construyamos",
-    titleB: "la próxima decisión?",
-    subtitle:
-      "Abierto a proyectos, prácticas y buenas conversaciones — en portugués, inglés o español.",
-    emailCta: "Envíame un correo",
-    socials: "Encuéntrame en",
+    designation: "Contacto",
+    title: "Contacto",
+    lede: "Abierto a roles senior full-stack, contratos remotos y conversaciones técnicas — en inglés, portugués o español.",
+    subtitle: "Respuesta habitual en un día hábil.",
+    emailCta: "Enviar correo",
+    phoneCta: "Llamar",
+    socials: "Enlaces",
     localTime: "Hora local",
     copied: "Copiado",
     resume: "Descargar CV",
@@ -184,5 +176,17 @@ export const es: Dict = {
     sceneFailed:
       "La animación 3D no pudo iniciarse en este dispositivo. Todo el contenido del portafolio sigue abajo.",
     notFound: "Sección no encontrada.",
+  },
+
+  snake: {
+    eyebrow: "Secreto",
+    title: "Snake",
+    score: "Puntos",
+    best: "Récord",
+    gameOver: "Perdiste :(",
+    restart: "Jugar de nuevo",
+    close: "Cerrar",
+    go: "Ya",
+    hint: "Flechas, WASD o swipe · Esc para salir",
   },
 }

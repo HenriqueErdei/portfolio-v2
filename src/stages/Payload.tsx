@@ -1,11 +1,11 @@
 import { profile } from "#content/profile"
 import { useI18n } from "@/i18n/context"
-import { Panel, PanelHead } from "@/ui/Panel"
+import { Panel } from "@/ui/Panel"
 import { Reveal } from "@/ui/Reveal"
 import { Stage } from "@/ui/Stage"
 import { StageHeading } from "@/ui/StageHeading"
 
-/** The bio, plus a spec panel of the plain facts beside it. */
+/** About — bio plus a compact facts card for recruiters. */
 export function Payload() {
   const { t, pick } = useI18n()
 
@@ -18,26 +18,30 @@ export function Payload() {
         subtitle={t.about.subtitle}
       />
 
-      <div className="grid gap-10 md:grid-cols-[1.6fr_1fr] md:gap-16">
-        <div className="flex flex-col gap-6">
-          {pick(profile.bio).map((paragraph, index) => (
-            <Reveal key={paragraph} as="p" delay={index * 90} className="text-lg leading-relaxed text-ink-dim">
-              {paragraph}
-            </Reveal>
-          ))}
-        </div>
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:gap-14">
+        <Reveal>
+          <Panel>
+            <div className="flex flex-col gap-6 p-6 md:p-8">
+              {pick(profile.bio).map((paragraph) => (
+                <p key={paragraph} className="text-base leading-[1.75] text-ink-dim md:text-lg">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </Panel>
+        </Reveal>
 
         <Reveal delay={120}>
-          <Panel>
-            <PanelHead code="01">{t.about.title}</PanelHead>
-            <dl className="grid grid-cols-2 gap-5 p-5">
+          <Panel className="spec-card h-full">
+            <dl className="grid gap-6 p-6 md:p-8">
               <SpecItem label={t.about.spec.role} value={pick(profile.role)} />
               <SpecItem label={t.about.spec.location} value={profile.location} />
+              <SpecItem label={t.about.spec.timezone} value={t.about.spec.timezoneValue} />
               <SpecItem
                 label={t.about.spec.availability}
                 value={profile.available ? t.intro.available : t.intro.unavailable}
               />
-              <SpecItem label={t.about.spec.handle} value={profile.handle} />
+              <SpecItem label={t.about.spec.email} value={profile.email} />
             </dl>
           </Panel>
         </Reveal>
@@ -46,15 +50,11 @@ export function Payload() {
   )
 }
 
-/**
- * A definition pair rather than two spans: this is genuinely label/value data,
- * and `dl` is what lets assistive tech pair them.
- */
 function SpecItem({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col gap-1">
-      <dt className="readout">{label}</dt>
-      <dd className="readout-value text-sm text-ink">{value}</dd>
+    <div className="flex flex-col gap-1.5 border-b border-line-soft pb-5 last:border-b-0 last:pb-0">
+      <dt className="spec-label">{label}</dt>
+      <dd className="text-sm font-medium text-ink md:text-base">{value}</dd>
     </div>
   )
 }

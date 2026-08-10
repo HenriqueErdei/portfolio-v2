@@ -1,18 +1,14 @@
-import { ArrowUp, ArrowUpRight, Check, Copy, FileDown, Mail } from "lucide-react"
+import { ArrowUp, ArrowUpRight, Check, Copy, FileDown, Mail, Phone } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { profile } from "#content/profile"
 import { useI18n } from "@/i18n/context"
 import { scrollToStage } from "@/lib/scrollTo"
 import { ExternalLink } from "@/ui/ExternalLink"
-import { Panel, PanelHead } from "@/ui/Panel"
+import { Panel } from "@/ui/Panel"
 import { Reveal } from "@/ui/Reveal"
 import { Stage } from "@/ui/Stage"
 import { StageHeading } from "@/ui/StageHeading"
 
-/**
- * S-06. Same Panel vocabulary as Notes / missions — instrument chrome over the
- * scene, not a one-off plate.
- */
 export function Comms() {
   const { t, pick } = useI18n()
 
@@ -21,36 +17,46 @@ export function Comms() {
       <StageHeading
         id="contact-title"
         designation={t.contact.designation}
-        title={t.nav.contact}
+        title={t.contact.title}
         subtitle={t.contact.subtitle}
       />
 
       <Reveal>
         <Panel>
-          <PanelHead code={t.contact.designation} right={<LocalClock compact />}>
-            {profile.handle}
-          </PanelHead>
+          <div className="p-6 md:p-8">
+            <p className="max-w-2xl text-lg leading-relaxed text-ink-dim md:text-xl">
+              {t.contact.lede}
+            </p>
 
-          <div className="p-5 md:p-6">
-            <h3 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-              <span className="block">{t.contact.titleA}</span>
-              <span className="mt-1 block text-sig">{t.contact.titleB}</span>
-            </h3>
-
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-stretch">
-              <a
-                href={`mailto:${profile.email}`}
-                className="inline-flex items-center justify-center gap-2 bg-sig px-5 py-3 text-sm font-medium tracking-wide text-void uppercase transition-opacity hover:opacity-90"
-              >
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <a href={`mailto:${profile.email}`} className="btn-primary">
                 <Mail aria-hidden="true" className="size-4" strokeWidth={1.75} />
                 {t.contact.emailCta}
               </a>
-              <CopyEmailButton email={profile.email} />
+
+              {profile.resumeUrl ? (
+                <ExternalLink href={profile.resumeUrl} showIcon={false} className="btn-secondary">
+                  <FileDown aria-hidden="true" className="size-4" strokeWidth={1.75} />
+                  {t.contact.resume}
+                </ExternalLink>
+              ) : null}
+
+              {profile.phone ? (
+                <a href={`tel:+55${profile.phone}`} className="btn-secondary">
+                  <Phone aria-hidden="true" className="size-4" strokeWidth={1.75} />
+                  {t.contact.phoneCta}
+                </a>
+              ) : null}
             </div>
 
-            <div className="mt-10 grid gap-10 border-t border-line-soft pt-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-12">
+            <div className="mt-6 flex flex-col gap-3 sm:max-w-xl">
+              <CopyEmailButton email={profile.email} />
+              {profile.phone ? <CopyPhoneButton phone={profile.phone} /> : null}
+            </div>
+
+            <div className="mt-12 grid gap-10 border-t border-line-soft pt-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-12">
               <div className="min-w-0">
-                <p className="readout mb-3 text-ink-dim">{t.contact.socials}</p>
+                <p className="spec-label mb-4">{t.contact.socials}</p>
                 <ul className="flex flex-col">
                   {profile.socials.map((social) => {
                     const external = social.url.startsWith("http")
@@ -63,10 +69,10 @@ export function Comms() {
                             : {})}
                           className="group flex w-full items-baseline justify-between gap-4 py-3.5"
                         >
-                          <span className="font-display text-lg font-medium text-ink transition-colors group-hover:text-sig sm:text-xl">
+                          <span className="text-base font-medium text-ink transition-colors group-hover:text-sig sm:text-lg">
                             {social.label}
                           </span>
-                          <span className="readout flex items-center gap-2 text-ink-dim">
+                          <span className="flex items-center gap-2 font-mono text-xs text-ink-faint">
                             {social.handle ?? social.label}
                             <ArrowUpRight
                               aria-hidden="true"
@@ -85,36 +91,25 @@ export function Comms() {
               </div>
 
               <div className="md:text-right">
-                <p className="readout mb-2 text-ink-dim">{t.contact.localTime}</p>
+                <p className="spec-label mb-2">{t.contact.localTime}</p>
                 <LocalClock />
-                <p className="readout mt-2 text-ink-dim">{profile.location}</p>
+                <p className="mt-2 text-sm text-ink-faint">
+                  {profile.location} · {t.about.spec.timezoneValue}
+                </p>
               </div>
             </div>
 
-            {profile.resumeUrl ? (
-              <div className="mt-6">
-                <ExternalLink href={profile.resumeUrl} showIcon={false} className="text-sm">
-                  <FileDown aria-hidden="true" className="size-4" strokeWidth={1.5} />
-                  {t.contact.resume}
-                </ExternalLink>
-              </div>
-            ) : null}
-
             <footer className="mt-10 flex flex-col gap-4 border-t border-line-soft pt-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
-                <p className="readout text-ink-dim">
+                <p className="text-sm text-ink-faint">
                   {profile.name} · {pick(profile.role)} · {new Date().getFullYear()}
                 </p>
-                <button
-                  type="button"
-                  onClick={() => scrollToStage("intro")}
-                  className="link-console readout text-ink"
-                >
+                <button type="button" onClick={() => scrollToStage("intro")} className="btn-ghost">
                   <ArrowUp aria-hidden="true" className="size-3.5" strokeWidth={2} />
                   {t.contact.backToTop}
                 </button>
               </div>
-              <p className="readout text-ink-dim">
+              <p className="text-xs text-ink-faint">
                 {t.contact.builtWith} React · TypeScript · Vite · Tailwind CSS · three.js
               </p>
             </footer>
@@ -133,7 +128,7 @@ const clockFmt = new Intl.DateTimeFormat("en-GB", {
   hour12: false,
 })
 
-function LocalClock({ compact = false }: { compact?: boolean }) {
+function LocalClock() {
   const [now, setNow] = useState(() => clockFmt.format(new Date()))
 
   useEffect(() => {
@@ -149,19 +144,20 @@ function LocalClock({ compact = false }: { compact?: boolean }) {
     return () => window.clearTimeout(timer)
   }, [])
 
-  if (compact) {
-    return <span className="readout-value text-xs text-sig">{now}</span>
-  }
-
   return (
-    <time className="font-display text-4xl font-semibold tracking-tight text-sig sm:text-5xl">
+    <time className="font-display text-3xl font-semibold tracking-tight text-sig sm:text-4xl">
       {now}
     </time>
   )
 }
 
-function CopyEmailButton({ email }: { email: string }) {
-  const { t } = useI18n()
+function formatPhoneBR(digits: string) {
+  const d = digits.replace(/\D/g, "")
+  if (d.length === 11) return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
+  return digits
+}
+
+function CopyContactButton({ value, copiedLabel }: { value: string; copiedLabel: string }) {
   const [copied, setCopied] = useState(false)
   const timer = useRef<number>(0)
 
@@ -169,12 +165,12 @@ function CopyEmailButton({ email }: { email: string }) {
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(email)
+      await navigator.clipboard.writeText(value)
       setCopied(true)
       window.clearTimeout(timer.current)
       timer.current = window.setTimeout(() => setCopied(false), 2200)
     } catch {
-      // Address stays selectable in the button label.
+      // Value stays selectable in the button label.
     }
   }
 
@@ -183,9 +179,9 @@ function CopyEmailButton({ email }: { email: string }) {
       <button
         type="button"
         onClick={copy}
-        className="inline-flex min-w-0 flex-1 items-center justify-between gap-3 border border-line px-4 py-3 font-mono text-xs tracking-wide text-ink-dim transition-colors hover:border-sig hover:text-sig sm:max-w-md"
+        className="inline-flex w-full items-center justify-between gap-3 border border-line-soft px-4 py-3 font-mono text-xs text-ink-dim transition-colors hover:border-sig hover:text-sig"
       >
-        <span className="truncate">{email}</span>
+        <span className="truncate">{value}</span>
         {copied ? (
           <Check aria-hidden="true" className="size-3.5 shrink-0" strokeWidth={2} />
         ) : (
@@ -193,8 +189,21 @@ function CopyEmailButton({ email }: { email: string }) {
         )}
       </button>
       <span role="status" aria-live="polite" className="sr-only">
-        {copied ? t.contact.copied : ""}
+        {copied ? copiedLabel : ""}
       </span>
     </>
   )
 }
+
+function CopyEmailButton({ email }: { email: string }) {
+  const { t } = useI18n()
+  return <CopyContactButton value={email} copiedLabel={t.contact.copied} />
+}
+
+function CopyPhoneButton({ phone }: { phone: string }) {
+  const { t } = useI18n()
+  return (
+    <CopyContactButton value={formatPhoneBR(phone)} copiedLabel={t.contact.copied} />
+  )
+}
+

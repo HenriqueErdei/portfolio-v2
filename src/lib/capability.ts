@@ -54,7 +54,21 @@ export function hasWebGL(): boolean {
   }
 }
 
+/**
+ * Narrow viewports skip WebGL — the CSS grid carries the room instead, and
+ * phones get a faster first paint without sacrificing readability.
+ */
+export function isMobileViewport(): boolean {
+  return window.matchMedia("(max-width: 767px)").matches
+}
+
 /** The single question the app asks before mounting the scene. */
 export function shouldRenderScene(): boolean {
-  return !prefersReducedMotion() && !prefersReducedData() && !isLowPowerDevice() && hasWebGL()
+  return (
+    !prefersReducedMotion() &&
+    !prefersReducedData() &&
+    !isLowPowerDevice() &&
+    !isMobileViewport() &&
+    hasWebGL()
+  )
 }

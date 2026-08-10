@@ -4,12 +4,12 @@ import { cn } from "@/lib/cn"
 interface PanelProps extends ComponentPropsWithoutRef<"div"> {
   /** Raised panels sit on top of the room; flat ones recede into it. */
   raised?: boolean
-  /** Corner ticks. On by default — they are what make a box read as instrument. */
+  /** Corner ticks — off by default for a cleaner editorial layout. */
   ticks?: boolean
   as?: ElementType
 }
 
-export function Panel({ raised, ticks = true, as = "div", className, ...rest }: PanelProps) {
+export function Panel({ raised, ticks = false, as = "div", className, ...rest }: PanelProps) {
   /* `ElementType` is the union of every tag there is, and JSX asks props to
      satisfy every member of a union at once — which even `className` fails. The
      substitutes are all block-level tags with the same attributes, so the render

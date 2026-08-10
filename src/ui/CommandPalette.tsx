@@ -58,6 +58,7 @@ export function CommandPalette() {
   const [status, setStatus] = useState("")
 
   const inputRef = useRef<HTMLInputElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
   const restoreTo = useRef<HTMLElement | null>(null)
   const listId = useId()
 
@@ -160,6 +161,19 @@ export function CommandPalette() {
       },
     })
 
+    if (profile.phone) {
+      push({
+        id: "contact:phone",
+        group: "contact",
+        label: t.palette.copyPhone,
+        hint: profile.phone,
+        run: () => {
+          void navigator.clipboard?.writeText(profile.phone!)
+          return t.palette.copied
+        },
+      })
+    }
+
     for (const social of profile.socials) {
       if (social.url.startsWith("mailto:")) continue
       push({
@@ -244,7 +258,18 @@ export function CommandPalette() {
   }, [open])
 
   useEffect(() => {
-    if (open) document.getElementById(`${listId}-${active}`)?.scrollIntoView({ block: "nearest" })
+    if (!open) return
+    const item = document.getElementById(`${listId}-${active}`)
+    const list = listRef.current
+    if (!item || !list) return
+
+    const itemTop = item.offsetTop
+    const itemBottom = itemTop + item.offsetHeight
+    const viewTop = list.scrollTop
+    const viewBottom = viewTop + list.clientHeight
+
+    if (itemTop < viewTop) list.scrollTop = itemTop - 8
+    else if (itemBottom > viewBottom) list.scrollTop = itemBottom - list.clientHeight + 8
   }, [open, active, listId])
 
   const runAt = useCallback(
@@ -308,7 +333,7 @@ export function CommandPalette() {
         role="dialog"
         aria-modal="true"
         aria-label={t.palette.title}
-        className="palette-panel panel panel-ticks"
+        className="palette-panel panel"
       >
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
           <span aria-hidden="true" className="readout-value text-sig">
@@ -339,7 +364,15 @@ export function CommandPalette() {
         {results.length === 0 ? (
           <p className="px-4 py-8 text-center text-sm text-ink-dim">{t.palette.empty}</p>
         ) : (
-          <ul id={listId} role="listbox" aria-label={t.palette.resultsLabel} className="palette-list">
+          <ul
+            ref={listRef}
+            id={listId}
+            role="listbox"
+            aria-label={t.palette.resultsLabel}
+            className="palette-list scroll-surface"
+            data-lenis-prevent
+            onWheel={(event) => event.stopPropagation()}
+          >
             {results.map((command, position) => (
               <Fragment key={command.id}>
                 {results[position - 1]?.group === command.group ? null : (
@@ -351,7 +384,6 @@ export function CommandPalette() {
                 {/* The pointer affordance for a row the keyboard reaches through
                     the input above — a combobox keeps focus in the field, so key
                     handling deliberately does not live here. */}
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
                 <li
                   role="option"
                   id={`${listId}-${position}`}

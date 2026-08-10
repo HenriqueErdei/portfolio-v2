@@ -1,10 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-import { BEAT } from "@/three/sequence"
+import { INTRO_DURATION } from "./intro"
 
-/**
- * The intro module keeps session state at module scope, so each test reloads it
- * through a fresh dynamic import after resetting modules and storage.
- */
 async function loadIntro() {
   vi.resetModules()
   return import("./intro")
@@ -40,27 +36,36 @@ describe("intro director", () => {
     expect(intro.sceneProgress(0)).toBe(0)
   })
 
-  it("resumes on the cascade when the session has already played", async () => {
+  it("resumes when the session has already played", async () => {
     sessionStorage.setItem("portfolio:intro", "1")
     const intro = await loadIntro()
     expect(intro.getIntroPhase()).toBe("done")
-    expect(intro.getIntroProgress()).toBe(BEAT.formed)
+    expect(intro.getIntroProgress()).toBe(1)
     expect(intro.isHeroRevealed()).toBe(true)
-    expect(intro.sceneProgress(0)).toBe(BEAT.formed)
+    expect(intro.sceneProgress(0)).toBe(0)
     expect(intro.sceneProgress(1)).toBe(1)
   })
 
-  it("maps scroll onto the cascade after the entry, never back through the blast", async () => {
+  it("maps scroll directly after the entry", async () => {
     sessionStorage.setItem("portfolio:intro", "1")
     const intro = await loadIntro()
-    const mid = intro.sceneProgress(0.5)
-    expect(mid).toBeGreaterThan(BEAT.formed)
-    expect(mid).toBeLessThan(1)
-    // Halfway down the page is still past the ignition — the blast does not replay.
-    expect(mid).toBeGreaterThan(BEAT.peak)
+    expect(intro.sceneProgress(0.5)).toBe(0.5)
   })
 
-  it("plays through to the cascade and reveals the hero once", async () => {
+  it("keeps ambient dark during the blast window", async () => {
+    const intro = await loadIntro()
+    expect(intro.ambientLift(0.3)).toBe(0)
+    expect(intro.ambientLift(0.8)).toBeGreaterThan(0.4)
+  })
+
+  it("peaks the blast inside its window", async () => {
+    const intro = await loadIntro()
+    const mid = intro.BLAST_START + (intro.BLAST_END - intro.BLAST_START) * 0.34
+    expect(intro.introFlash(mid)).toBeGreaterThan(0.85)
+    expect(intro.introFlash(0)).toBe(0)
+  })
+
+  it("plays through and reveals the hero once", async () => {
     vi.useFakeTimers()
     const intro = await loadIntro()
 
@@ -70,17 +75,17 @@ describe("intro director", () => {
     })
 
     const done = intro.playIntro()
-    await vi.advanceTimersByTimeAsync(8000)
+    await vi.advanceTimersByTimeAsync(INTRO_DURATION + 100)
     await done
 
     expect(intro.getIntroPhase()).toBe("done")
-    expect(intro.getIntroProgress()).toBe(BEAT.formed)
+    expect(intro.getIntroProgress()).toBe(1)
     expect(intro.isHeroRevealed()).toBe(true)
     expect(revealed).toBe(1)
     expect(sessionStorage.getItem("portfolio:intro")).toBe("1")
   })
 
-  it("skips the blast under reduced motion", async () => {
+  it("skips the fade under reduced motion", async () => {
     vi.stubGlobal(
       "matchMedia",
       vi.fn().mockImplementation((query: string) => ({
@@ -98,7 +103,7 @@ describe("intro director", () => {
     await intro.playIntro()
 
     expect(intro.getIntroPhase()).toBe("done")
-    expect(intro.getIntroProgress()).toBe(BEAT.formed)
+    expect(intro.getIntroProgress()).toBe(1)
     expect(intro.isHeroRevealed()).toBe(true)
   })
 })

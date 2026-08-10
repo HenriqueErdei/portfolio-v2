@@ -1,6 +1,7 @@
 import { useFrame } from "@react-three/fiber"
 import { useEffect, useMemo, type RefObject } from "react"
 import * as THREE from "three"
+import { mulberry32 } from "./random"
 import { BOKEH_FRAGMENT, BOKEH_VERTEX } from "./shaders"
 import { useThemeTokens } from "./tokens"
 
@@ -18,24 +19,7 @@ import { useThemeTokens } from "./tokens"
 /** Height of the repeating slab, in world units. */
 const SPAN = 26
 
-const COUNT = 110
-
-/**
- * Deterministic PRNG. The motes are placed once at module scale and never move
- * house, so using `Math.random` would recompose the background on every reload —
- * and a big soft blob landing over the headline would be nobody's decision.
- */
-function mulberry32(seed: number): () => number {
-  let state = seed >>> 0
-
-  return () => {
-    state = (state + 0x6d2b79f5) >>> 0
-    let t = state
-    t = Math.imul(t ^ (t >>> 15), t | 1)
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
+const COUNT = 36
 
 export function Bokeh({ progress }: { progress: RefObject<number> }) {
   const tokens = useThemeTokens()
@@ -122,14 +106,15 @@ export function Bokeh({ progress }: { progress: RefObject<number> }) {
   )
 
   useEffect(() => {
-    material.uniforms.uNear!.value.copy(tokens.ink)
-    material.uniforms.uFar!.value.copy(tokens.sig)
-
-    // On the dark theme the motes add light. On paper they have to remove it, so
-    // the blend mode flips or the field vanishes into white.
     const daylight = tokens.theme === 1
+    const near = tokens.ink.clone()
+    const far = tokens.ink.clone().lerp(tokens.sig, daylight ? 0.12 : 0.08)
+
+    material.uniforms.uNear!.value.copy(near)
+    material.uniforms.uFar!.value.copy(far)
+
     material.blending = daylight ? THREE.NormalBlending : THREE.AdditiveBlending
-    material.uniforms.uOpacity!.value = daylight ? 0.28 : 0.5
+    material.uniforms.uOpacity!.value = daylight ? 0.12 : 0.16
     material.needsUpdate = true
   }, [material, tokens])
 

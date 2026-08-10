@@ -25,8 +25,8 @@ export function readThemeTokens(): ThemeTokens {
   return {
     // Fallbacks mirror the dark theme in `tokens.css`; they only apply if the
     // stylesheet has not landed yet, which is a frame or two at most.
-    sig: read("--c-sig", "#38d9ff"),
-    plasma: read("--c-plasma", "#a06bff"),
+    sig: read("--c-sig", "#6ba3c7"),
+    plasma: read("--c-plasma", "#8b7cb8"),
     ink: read("--c-ink", "#dfe7f5"),
     warn: read("--c-warn", "#ffc24d"),
     theme: document.documentElement.dataset.theme === "daylight" ? 1 : 0,

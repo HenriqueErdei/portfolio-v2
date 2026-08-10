@@ -1,9 +1,5 @@
 import type { Dict } from "./dict"
 
-/**
- * `Dict` is derived from the Portuguese source, so a missing or misspelled key is
- * a compile error here rather than a blank string on the page.
- */
 export const en: Dict = {
   meta: {
     localeName: "English",
@@ -19,7 +15,7 @@ export const en: Dict = {
     langSwitch: "Change language",
     soundToggle: "Turn the interface sound on or off",
     sceneLabel:
-      "Decorative animation: a geometric bolt strikes the geogram and shatters into crystals as the page loads.",
+      "Decorative background: a soft grid and subtle particles that follow scroll.",
     progressLabel: "Page progress",
     externalLink: "opens in a new tab",
   },
@@ -30,8 +26,8 @@ export const en: Dict = {
   },
 
   palette: {
-    open: "Open the command console",
-    title: "Command console",
+    open: "Open command palette",
+    title: "Command palette",
     placeholder: "Search a section, project or command",
     empty: "No command matches that search.",
     resultsLabel: "Available commands",
@@ -52,59 +48,66 @@ export const en: Dict = {
     soundOn: "Sound on",
     soundOff: "Sound off",
     copyEmail: "Copy email",
+    copyPhone: "Copy phone",
     copied: "Email copied",
     active: "in use",
   },
 
   boot: {
-    label: "Preflight",
+    label: "Loading",
     ok: "OK",
-    hint: "opens the command console",
+    hint: "opens the command palette",
     step: {
-      systems: "Systems",
+      systems: "Assets",
       type: "Typography",
-      scene: "3D scene",
-      ready: "Ready to launch",
+      scene: "Background",
+      ready: "Ready",
     },
   },
 
   nav: {
-    intro: "Intro",
+    intro: "Home",
     about: "About",
-    path: "Path",
-    work: "Work",
-    stack: "Stack",
-    notes: "Notes",
+    path: "Experience",
+    work: "Projects",
+    stack: "Skills",
     contact: "Contact",
   },
 
   intro: {
-    designation: "00",
-    title: "Intro",
-    available: "Available for projects",
-    unavailable: "No availability right now",
-    scrollHint: "Scroll to begin",
+    designation: "Home",
+    title: "Home",
+    available: "Open to opportunities",
+    unavailable: "Not available right now",
+    scrollHint: "Scroll to continue",
     basedIn: "Based in",
-    primaryCta: "See the work",
+    remoteFriendly: "Remote · US/EU overlap",
+    stackLabel: "Core stack",
+    primaryCta: "View experience",
     secondaryCta: "Get in touch",
+    resumeCta: "Download résumé",
   },
 
   about: {
-    designation: "01",
+    designation: "About",
     title: "About",
-    subtitle: "Who is on the other side, and how I work.",
+    subtitle:
+      "Senior full-stack engineer — product, API and UI held to the same quality bar.",
     spec: {
       role: "Role",
-      location: "Based in",
-      availability: "Status",
+      location: "Location",
+      timezone: "Time zone",
+      timezoneValue: "UTC-3 (BRT)",
+      availability: "Availability",
+      email: "Email",
       handle: "Handle",
     },
   },
 
   path: {
-    designation: "02",
-    title: "Path",
-    subtitle: "How I got here, in the order it happened.",
+    designation: "Experience",
+    title: "Experience",
+    subtitle: "Professional history, education and relevant credentials.",
     kind: {
       work: "Work",
       education: "Education",
@@ -114,9 +117,11 @@ export const en: Dict = {
   },
 
   work: {
-    designation: "03",
-    title: "Work",
-    subtitle: "Open a project for the full write-up.",
+    designation: "Projects",
+    title: "Projects",
+    subtitle: "Selected case studies with measurable impact — published as they ship.",
+    empty:
+      "New case studies are in progress. Full history is in Experience and on the résumé.",
     status: {
       orbital: "Live",
       ascent: "In progress",
@@ -127,8 +132,8 @@ export const en: Dict = {
       ascent: "Being built right now",
       archived: "Finished, no longer maintained",
     },
-    expand: "Open details",
-    collapse: "Close details",
+    expand: "View details",
+    collapse: "Hide details",
     repo: "Code",
     demo: "View live",
     caseStudy: "Case study",
@@ -137,40 +142,28 @@ export const en: Dict = {
   },
 
   stack: {
-    designation: "04",
-    title: "Stack",
-    subtitle: "The tools I actually reach for, with an honest level.",
+    designation: "Skills",
+    title: "Skills",
+    subtitle: "Tools I use in production, with an honest proficiency level.",
     levelLabel: "Level",
     sinceLabel: "Since",
-    bayLabel: "Cargo bay",
-    bayHint: "Drag — zero gravity",
     group: {
       guidance: "Languages",
-      structure: "Back-end and data",
-      propulsion: "Interface",
-      comms: "APIs and integrations",
-      ground: "Infra and tooling",
+      structure: "Back-end & database",
+      propulsion: "Front-end & mobile",
+      comms: "APIs & integrations",
+      ground: "Infra & tooling",
     },
   },
 
-  notes: {
-    designation: "05",
-    title: "Notes",
-    subtitle: "Technical notes on what I learned building things.",
-    readMore: "Read note",
-    backToNotes: "Back to notes",
-    empty: "No notes published yet.",
-    minuteRead: "min read",
-    publishedOn: "Published on",
-  },
-
   contact: {
-    designation: "06",
-    titleA: "Let's build",
-    titleB: "the next decision?",
-    subtitle: "Open to projects, internships and good conversations — in Portuguese, English or Spanish.",
-    emailCta: "Send me an email",
-    socials: "Find me on",
+    designation: "Contact",
+    title: "Contact",
+    lede: "Open to senior full-stack roles, remote contracts and technical conversations — English, Portuguese or Spanish.",
+    subtitle: "Typical reply within one business day.",
+    emailCta: "Email me",
+    phoneCta: "Call",
+    socials: "Links",
     localTime: "Local time",
     copied: "Copied",
     resume: "Download résumé",
@@ -183,5 +176,17 @@ export const en: Dict = {
     sceneFailed:
       "The 3D animation could not start on this device. All of the portfolio's content is below.",
     notFound: "Section not found.",
+  },
+
+  snake: {
+    eyebrow: "Secret",
+    title: "Snake",
+    score: "Score",
+    best: "Best",
+    gameOver: "You lost :(",
+    restart: "Play again",
+    close: "Close",
+    go: "Go",
+    hint: "Arrows, WASD or swipe · Esc to exit",
   },
 }

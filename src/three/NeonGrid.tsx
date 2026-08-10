@@ -45,10 +45,14 @@ export function NeonGrid({ progress }: { progress: RefObject<number> }) {
   useEffect(() => () => material.dispose(), [material])
 
   useEffect(() => {
-    material.uniforms.uNear!.value.copy(tokens.sig)
-    material.uniforms.uFar!.value.copy(tokens.plasma)
+    const daylight = tokens.theme === 1
+    const near = tokens.ink.clone().multiplyScalar(daylight ? 0.28 : 0.14)
+    const far = tokens.ink.clone().multiplyScalar(daylight ? 0.16 : 0.08)
+
+    material.uniforms.uNear!.value.copy(near)
+    material.uniforms.uFar!.value.copy(far)
     material.uniforms.uTheme!.value = tokens.theme
-    material.blending = tokens.theme === 1 ? THREE.NormalBlending : THREE.AdditiveBlending
+    material.blending = daylight ? THREE.NormalBlending : THREE.AdditiveBlending
     material.needsUpdate = true
   }, [material, tokens])
 

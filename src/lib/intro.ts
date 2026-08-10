@@ -1,16 +1,17 @@
-import { BEAT } from "@/three/sequence"
 import { prefersReducedMotion } from "./capability"
 
 /**
- * Entry choreography, Portfolio-b style: the spectacle plays once when you land,
- * then the page is handed to you. The beats (bolt → strike → impact → cascade)
- * are driven by a clock here; after that, scroll only evolves the cascade the
- * blast left behind.
+ * Entry choreography — one linear clock drives everything:
+ * checklist → blast (synced) → ambient lift → hero.
  */
 
 const SESSION_KEY = "portfolio:intro"
 
 export type IntroPhase = "waiting" | "playing" | "done"
+
+/** Linear timeline, 0 → 1. Blast occupies the middle slice only. */
+export const BLAST_START = 0.14
+export const BLAST_END = 0.56
 
 type Listener = () => void
 
@@ -18,17 +19,16 @@ const listeners = new Set<Listener>()
 const revealListeners = new Set<Listener>()
 
 let phase: IntroPhase = alreadyPlayed() ? "done" : "waiting"
-/** Sequence progress, 0 → `BEAT.formed`. After the intro, the scene floors here. */
-let progress = phase === "done" ? BEAT.formed : 0
+/** Linear intro clock, 0 → 1. After intro, ambient is fully open. */
+let progress = phase === "done" ? 1 : 0
 let heroRevealed = phase === "done"
 let raf = 0
 
-/** Wall-clock length of the entry run, in milliseconds. Charge + strike need a
- *  beat to read; the settle should not linger. */
-const DURATION = 8400
+/** Wall-clock length of the entry run, in milliseconds. */
+export const INTRO_DURATION = 4000
 
-/** Hero copy comes in just after the flash, while the cascade is still settling. */
-const REVEAL_AT = BEAT.peak + 0.02
+/** Hero enters as the blast finishes expanding. */
+const REVEAL_AT = 0.52
 
 function alreadyPlayed(): boolean {
   try {
@@ -56,10 +56,63 @@ function revealHero() {
   for (const listener of revealListeners) listener()
 }
 
+/** 0 → 1 progress inside the blast window; -1 outside it. */
+function blastPhase(clock: number): number {
+  if (clock < BLAST_START || clock > BLAST_END) return -1
+  return (clock - BLAST_START) / (BLAST_END - BLAST_START)
+}
+
+/** Core flash — sharp peak early in the blast window. */
+export function introFlash(clock: number): number {
+  const p = blastPhase(clock)
+  if (p < 0) return 0
+  return Math.exp(-(((p - 0.32) / 0.14) ** 2))
+}
+
+/** Softer afterglow as the wave expands — same clock, second peak. */
+export function introAfterglow(clock: number): number {
+  const p = blastPhase(clock)
+  if (p < 0) return 0
+  return Math.exp(-(((p - 0.58) / 0.17) ** 2)) * 0.62
+}
+
+/** Primary shockwave ring. */
+export function introShockwave(clock: number): number {
+  const p = blastPhase(clock)
+  if (p < 0) return 0
+  const x = Math.min(1, Math.max(0, (p - 0.04) / 0.9))
+  return x * x * (3 - 2 * x)
+}
+
+/** Trailing echo ring — derived from the same blast phase, offset. */
+export function introShockwaveEcho(clock: number): number {
+  const p = blastPhase(clock)
+  if (p < 0) return 0
+  const x = Math.min(1, Math.max(0, (p - 0.26) / 0.74))
+  return x * x * (3 - 2 * x)
+}
+
+/** Combined flash strength for CSS overlays (still one clock). */
+export function introBlastGlow(clock: number): number {
+  return Math.min(1, introFlash(clock) + introAfterglow(clock) * 0.55)
+}
+
+/**
+ * Ambient background lift — stays dark during the blast, opens afterward.
+ * Used for grid, dust and room opacity.
+ */
+export function ambientLift(clock: number): number {
+  if (phase === "done") return 1
+  if (clock <= BLAST_END) return 0
+  const x = (clock - BLAST_END) / (1 - BLAST_END)
+  return x * x * (3 - 2 * x)
+}
+
 export function getIntroPhase(): IntroPhase {
   return phase
 }
 
+/** Linear intro clock (not remapped). */
 export function getIntroProgress(): number {
   return progress
 }
@@ -68,14 +121,14 @@ export function isHeroRevealed(): boolean {
   return heroRevealed
 }
 
-/**
- * Progress the three.js scene should read. During the entry it is the clock;
- * afterwards it is the cascade floor plus whatever the visitor has scrolled —
- * so the blast never fires again just because someone dragged the scrollbar.
- */
+export function shouldAnimateHero(): boolean {
+  return !alreadyPlayed() && !prefersReducedMotion()
+}
+
+/** Ambient scene progress — blast first, then scroll. */
 export function sceneProgress(scroll: number): number {
-  if (phase === "playing" || phase === "waiting") return progress
-  return BEAT.formed + Math.min(1, Math.max(0, scroll)) * (1 - BEAT.formed)
+  if (phase === "playing" || phase === "waiting") return ambientLift(progress)
+  return Math.min(1, Math.max(0, scroll))
 }
 
 export function subscribeToIntro(listener: Listener): () => void {
@@ -90,13 +143,6 @@ export function onHeroReveal(listener: Listener): () => void {
   return () => revealListeners.delete(listener)
 }
 
-/**
- * Runs the entry sequence. Resolves when the cascade has settled and the page
- * can be unlocked. Safe to call more than once — a second call is a no-op.
- *
- * With reduced motion the blast is skipped: the scene snaps to the cascade and
- * the hero appears immediately, which is the honest reading of "less motion".
- */
 export function playIntro(): Promise<void> {
   if (phase === "playing") {
     return new Promise((resolve) => {
@@ -116,7 +162,7 @@ export function playIntro(): Promise<void> {
 
   if (prefersReducedMotion()) {
     phase = "done"
-    progress = BEAT.formed
+    progress = 1
     remember()
     revealHero()
     publish()
@@ -131,23 +177,19 @@ export function playIntro(): Promise<void> {
     const started = performance.now()
 
     const tick = (now: number) => {
-      const t = Math.min(1, (now - started) / DURATION)
-      // Ease in-out so the transit and the settle both get a beat to read, and
-      // the flash in the middle is not lingered on.
-      const eased = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2
-      progress = eased * BEAT.formed
+      progress = Math.min(1, (now - started) / INTRO_DURATION)
 
       if (progress >= REVEAL_AT) revealHero()
 
       publish()
 
-      if (t < 1) {
+      if (progress < 1) {
         raf = requestAnimationFrame(tick)
         return
       }
 
       phase = "done"
-      progress = BEAT.formed
+      progress = 1
       remember()
       revealHero()
       publish()
@@ -158,7 +200,6 @@ export function playIntro(): Promise<void> {
   })
 }
 
-/** Cancels a run in flight. Used when the boot unmounts mid-play. */
 export function cancelIntro() {
   if (raf) cancelAnimationFrame(raf)
   raf = 0
