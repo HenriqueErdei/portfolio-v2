@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# SPA: every route falls back to index.html so deep links to /log/<slug> work.
+# SPA: every route falls back to index.html so hash-based section links work.
 [[redirects]]
   from = "/*"
   to = "/index.html"
