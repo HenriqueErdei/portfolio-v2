@@ -13,8 +13,7 @@ export const STAGES = [
   { id: "path", designation: "02" },
   { id: "work", designation: "03" },
   { id: "stack", designation: "04" },
-  { id: "notes", designation: "05" },
-  { id: "contact", designation: "06" },
+  { id: "contact", designation: "05" },
 ] as const
 
 export type StageId = (typeof STAGES)[number]["id"]
