@@ -1,9 +1,9 @@
 import { Suspense, lazy, useEffect, useState } from "react"
 import { useI18n } from "@/i18n/context"
 import { shouldRenderScene } from "@/lib/capability"
+import { useRoomIntro } from "@/lib/useRoomIntro"
 import { scrollToStage } from "@/lib/scrollTo"
 import { Comms } from "@/stages/Comms"
-import { FlightLog } from "@/stages/FlightLog"
 import { Missions } from "@/stages/Missions"
 import { Payload } from "@/stages/Payload"
 import { Preflight } from "@/stages/Preflight"
@@ -13,6 +13,7 @@ import { SceneBoundary } from "@/three/SceneBoundary"
 import { BootSequence } from "@/ui/BootSequence"
 import { CommandPalette } from "@/ui/CommandPalette"
 import { Reticle } from "@/ui/Reticle"
+import { SnakeSecret } from "@/ui/SnakeSecret"
 import { SoundDeck } from "@/ui/SoundDeck"
 import { TelemetryBar } from "@/ui/TelemetryBar"
 
@@ -22,6 +23,7 @@ const Scene = lazy(() => import("@/three/Scene"))
 
 export function App() {
   const { t } = useI18n()
+  const room = useRoomIntro()
   const [sceneEnabled, setSceneEnabled] = useState(false)
   const [sceneFailed, setSceneFailed] = useState(false)
 
@@ -33,7 +35,7 @@ export function App() {
   }, [])
 
   return (
-    <div className="room">
+    <div ref={room} className="room" data-scene={sceneEnabled && !sceneFailed ? "on" : "off"}>
       <a
         href="#about"
         className="skip-link readout"
@@ -58,6 +60,7 @@ export function App() {
 
       <TelemetryBar />
       <CommandPalette />
+      <SnakeSecret />
       <Reticle />
       <SoundDeck />
       <BootSequence />
@@ -68,7 +71,6 @@ export function App() {
         <Trajectory />
         <Missions />
         <Subsystems />
-        <FlightLog />
         <Comms />
       </main>
 
