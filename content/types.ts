@@ -97,13 +97,17 @@ export interface Profile {
   readonly handle: string
   readonly role: Localized<string>
   readonly location: string
-  /** IANA zone — the readout in the top bar shows local time here. */
+  /** IANA zone — local time in the contact section. */
   readonly timezone: string
   readonly email: string
+  /** Digits only, e.g. 11925815808 — rendered as tel:+55… in contact. */
+  readonly phone?: string
   /** Hero copy, one line per element so it can be animated per-line. */
   readonly headline: Localized<readonly string[]>
   readonly bio: Localized<readonly string[]>
   readonly available: boolean
   readonly socials: readonly SocialLink[]
   readonly resumeUrl?: string
+  /** Short list of core technologies shown on the hero. */
+  readonly focusStack: readonly string[]
 }
