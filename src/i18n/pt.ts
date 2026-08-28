@@ -97,7 +97,7 @@ export const pt = {
   about: {
     designation: "Sobre",
     title: "Sobre",
-    subtitle: "Engenheiro full-stack sênior — produto, API e interface com o mesmo padrão de qualidade.",
+    subtitle: "Engenheiro full-stack sênior — web, mobile, API e produto com o mesmo padrão de qualidade.",
     spec: {
       role: "Cargo",
       location: "Local",
@@ -112,13 +112,17 @@ export const pt = {
   path: {
     designation: "Experiência",
     title: "Experiência",
-    subtitle: "Trajetória profissional, formação e certificações relevantes.",
+    subtitle: "Cargos em software primeiro. Formação acadêmica em seguida.",
+    workHeading: "Trajetória profissional",
+    educationHeading: "Formação",
     kind: {
       work: "Trabalho",
       education: "Formação",
       credential: "Certificado",
     },
-    viewCredential: "Ver credencial",
+    courses:
+      "Cursos em web, cloud e dados (Alura, Rocketseat, AWS e outros) — lista no LinkedIn.",
+    viewCredential: "Ver certificados",
   },
 
   work: {

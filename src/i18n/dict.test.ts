@@ -48,7 +48,7 @@ describe("dictionaries", () => {
    * them keeps the check strict everywhere else — if one of these ever needs to
    * differ, removing the entry is what forces the translation.
    */
-  const IDENTICAL_BY_DESIGN = new Set(["es:path.viewCredential"])
+  const IDENTICAL_BY_DESIGN = new Set<string>()
 
   it("does not leave Portuguese copy sitting in the other locales", () => {
     const portuguese = flatten(pt)

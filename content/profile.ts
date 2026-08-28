@@ -21,27 +21,27 @@ export const profile: Profile = {
   phone: "11925815808",
 
   headline: {
-    pt: ["Produtos web", "prontos para produção,", "de ponta a ponta."],
-    en: ["Production-ready", "web products,", "owned end to end."],
-    es: ["Productos web", "listos para producción,", "de punta a punta."],
+    pt: ["Produtos web e mobile", "prontos para produção,", "de ponta a ponta."],
+    en: ["Production-ready", "web and mobile products,", "owned end to end."],
+    es: ["Productos web y mobile", "listos para producción,", "de punta a punta."],
   },
 
   bio: {
     pt: [
-      "Engenheiro full-stack com foco em TypeScript, React, Node.js e PostgreSQL — da modelagem de dados à interface, com contratos de API claros e código que aguenta revisão em time sênior.",
+      "Engenheiro full-stack com foco em TypeScript, React, React Native, Node.js e PostgreSQL — da modelagem de dados à interface web e ao app mobile, com contratos de API claros e código que aguenta revisão em time sênior.",
       "Background em Data Science e BI (Power BI, Python, modelagem). Isso entra como repertório: decisões de produto, métricas e arquitetura saem mais maduras quando dado e UX são tratados como um sistema.",
     ],
     en: [
-      "Full-stack engineer focused on TypeScript, React, Node.js and PostgreSQL — from data modeling and API design through polished UI, with code that holds up in senior team review.",
+      "Full-stack engineer focused on TypeScript, React, React Native, Node.js and PostgreSQL — from data modeling and API design through polished web UI and mobile apps, with code that holds up in senior team review.",
       "Background in Data Science and BI (Power BI, Python, modeling). That shows up as stronger product judgment: metrics, contracts and architecture land better when data and UX are treated as one system.",
     ],
     es: [
-      "Ingeniero full-stack enfocado en TypeScript, React, Node.js y PostgreSQL — del modelado de datos y diseño de API a una UI pulida, con código que aguanta revisión en equipos senior.",
+      "Ingeniero full-stack enfocado en TypeScript, React, React Native, Node.js y PostgreSQL — del modelado de datos y diseño de API a una UI web pulida y apps mobile, con código que aguanta revisión en equipos senior.",
       "Formación en Data Science y BI (Power BI, Python, modelado). Eso suma criterio de producto: métricas, contratos y arquitectura mejoran cuando dato y UX se tratan como un solo sistema.",
     ],
   },
 
-  focusStack: ["TypeScript", "React", "Node.js", "PostgreSQL", "AWS"],
+  focusStack: ["TypeScript", "React", "React Native", "Node.js", "PostgreSQL", "AWS"],
 
   available: true,
 

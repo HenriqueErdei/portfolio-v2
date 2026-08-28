@@ -92,7 +92,7 @@ export const en: Dict = {
     designation: "About",
     title: "About",
     subtitle:
-      "Senior full-stack engineer — product, API and UI held to the same quality bar.",
+      "Senior full-stack engineer — web, mobile, API and product held to the same quality bar.",
     spec: {
       role: "Role",
       location: "Location",
@@ -107,13 +107,17 @@ export const en: Dict = {
   path: {
     designation: "Experience",
     title: "Experience",
-    subtitle: "Professional history, education and relevant credentials.",
+    subtitle: "Software roles first. Academic background next.",
+    workHeading: "Professional history",
+    educationHeading: "Education",
     kind: {
       work: "Work",
       education: "Education",
       credential: "Certificate",
     },
-    viewCredential: "View credential",
+    courses:
+      "Courses in web, cloud and data (Alura, Rocketseat, AWS and others) — full list on LinkedIn.",
+    viewCredential: "View certificates",
   },
 
   work: {

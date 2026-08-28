@@ -33,6 +33,7 @@ export const subsystems: readonly Subsystem[] = [
 
   // Integrações / comms
   { name: "REST", slug: "openapiinitiative", color: "#6BA539", level: 4, since: 2025, group: "comms" },
+  { name: "Socket.IO", slug: "socketdotio", color: "#010101", level: 3, since: 2025, group: "comms" },
   { name: "n8n", slug: "n8n", color: "#EA4B71", level: 3, since: 2025, group: "comms" },
 
   // Ferramental / ground
