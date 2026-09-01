@@ -1,0 +1,44 @@
+<svg width="1600" height="650" viewBox="0 0 1600 650" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="650" fill="#070A0F"/>
+  <text x="70" y="78" fill="#F8FAFC" font-family="Segoe UI, Arial" font-size="38" font-weight="850">Arquitetura do pipeline.</text>
+  <text x="70" y="116" fill="#94A3B8" font-family="Segoe UI, Arial" font-size="19">Pessoa, torso e cor fluorescente  sem confundir faixa de uniforme com colete.</text>
+  <defs>
+    <marker id="arrow-epi" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L12 7L2 12V2Z" fill="#4F8CFF"/>
+    </marker>
+  </defs>
+  <g font-family="Segoe UI, Arial">
+    <rect x="70" y="212" width="275" height="150" rx="12" fill="#101827" stroke="#253044"/>
+    <text x="106" y="265" fill="#4F8CFF" font-size="18" font-weight="850">01</text>
+    <text x="106" y="305" fill="#F8FAFC" font-size="25" font-weight="850">Câmera ou vídeo.</text>
+    <text x="106" y="336" fill="#94A3B8" font-size="16">Fonte de entrada.</text>
+
+    <line x1="345" y1="287" x2="430" y2="287" stroke="#4F8CFF" stroke-width="4" marker-end="url(#arrow-epi)"/>
+
+    <rect x="450" y="212" width="275" height="150" rx="12" fill="#101827" stroke="#253044"/>
+    <text x="486" y="265" fill="#4F8CFF" font-size="18" font-weight="850">02</text>
+    <text x="486" y="305" fill="#F8FAFC" font-size="26" font-weight="850">YOLO Pose.</text>
+    <text x="486" y="336" fill="#94A3B8" font-size="16">Pessoa e keypoints.</text>
+
+    <line x1="725" y1="287" x2="810" y2="287" stroke="#4F8CFF" stroke-width="4" marker-end="url(#arrow-epi)"/>
+
+    <rect x="830" y="212" width="275" height="150" rx="12" fill="#101827" stroke="#253044"/>
+    <text x="866" y="265" fill="#4F8CFF" font-size="18" font-weight="850">03</text>
+    <text x="866" y="305" fill="#F8FAFC" font-size="26" font-weight="850">HSV no torso.</text>
+    <text x="866" y="336" fill="#94A3B8" font-size="16">Área, lados e span.</text>
+
+    <line x1="1105" y1="287" x2="1190" y2="287" stroke="#4F8CFF" stroke-width="4" marker-end="url(#arrow-epi)"/>
+
+    <rect x="1210" y="212" width="320" height="150" rx="12" fill="#101827" stroke="#253044"/>
+    <text x="1246" y="265" fill="#4F8CFF" font-size="18" font-weight="850">04</text>
+    <text x="1246" y="305" fill="#F8FAFC" font-size="26" font-weight="850">Dashboard web.</text>
+    <text x="1246" y="336" fill="#94A3B8" font-size="16">MJPEG, conformidade e alertas.</text>
+
+    <line x1="588" y1="362" x2="588" y2="422" stroke="#F08C2A" stroke-width="3"/>
+    <line x1="968" y1="362" x2="968" y2="422" stroke="#F08C2A" stroke-width="3"/>
+
+    <rect x="420" y="422" width="760" height="112" rx="12" fill="#0D121A" stroke="#253044"/>
+    <text x="800" y="468" text-anchor="middle" fill="#CBD5E1" font-size="18" font-weight="700">Colete: mancha fluorescente grande nos dois lados do peito.</text>
+    <text x="800" y="500" text-anchor="middle" fill="#CBD5E1" font-size="18" font-weight="700">Faixa de uniforme cinza é rejeitada.</text>
+  </g>
+</svg>

@@ -123,10 +123,34 @@ typecheck, lint, testes com cobertura e build. Node 22.
 
 ## Publicando
 
-**Netlify** (`netlify.toml`): `npm run build` → `dist/`, Node 22, fallback SPA,
-cache imutável em `/assets/*`.
+### Neste servidor (IP público)
 
-URL do site: `VITE_SITE_URL` no build (veja `.env.example`). Sem ela, vale o
-default em `content/site.ts`. Sitemap e `robots.txt` são gerados no build.
+No ar em **http://178.105.63.20** — Nginx, porta 80, site padrão para o IP.
+`farmcloudmc.com` e os outros vhosts não mudam: só o acesso pelo IP cai no
+portfólio.
 
-Vercel ou Cloudflare Pages: mesmo comando e mesma pasta de saída.
+**Fall Detect** (demo): **http://178.105.63.20/fall-detect/** — Flask em
+`127.0.0.1:5001`, unidade `fall-detect.service`. Sem câmera neste servidor;
+no painel dá para apontar um RTSP.
+
+**EPI Detect** (demo): **http://178.105.63.20/epi-detect/** — Flask em
+`127.0.0.1:5002`, unidade `epi-detect.service`. Sem câmera neste servidor;
+no painel dá para apontar um RTSP.
+
+```bash
+nvm use
+npm run deploy
+```
+
+O script gera o `dist/` com `VITE_SITE_URL=http://178.105.63.20`, copia para
+`/var/www/henrique-erdei-portfolio` e recarrega o Nginx
+(`deploy/nginx-portfolio.conf`).
+
+Quando tiver domínio, aponte o DNS para este IP, troque `VITE_SITE_URL` e
+adicione TLS (certbot) no `server` do Nginx.
+
+### Netlify / Vercel
+
+`netlify.toml`: `npm run build` → `dist/`, Node 22, fallback SPA, cache
+imutável em `/assets/*`. Sem `VITE_SITE_URL`, vale o default em
+`content/site.ts`. Sitemap e `robots.txt` saem no build.
