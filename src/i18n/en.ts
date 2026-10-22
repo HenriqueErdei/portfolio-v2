@@ -123,7 +123,7 @@ export const en: Dict = {
   work: {
     designation: "Projects",
     title: "Projects",
-    subtitle: "Selected case studies with measurable impact — published as they ship.",
+    subtitle: "Selected cases — what is live and what the code actually does.",
     empty:
       "New case studies are in progress. Full history is in Experience and on the résumé.",
     status: {

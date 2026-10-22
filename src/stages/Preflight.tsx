@@ -27,7 +27,7 @@ export function Preflight() {
       aria-labelledby="intro-title"
       data-preboot={animate && !ready ? "true" : "false"}
       data-hero-enter={animate && ready ? "true" : "false"}
-      className="stage flex min-h-[100svh] items-center border-t-0 pt-14 focus-visible:outline-none"
+      className="stage flex min-h-[100svh] items-center border-t-0 pt-24 md:pt-14 focus-visible:outline-none"
     >
       <div className="shell w-full max-w-4xl">
         <HeroEnter className="flex flex-wrap items-center gap-3">

@@ -129,13 +129,11 @@ No ar em **http://178.105.63.20** — Nginx, porta 80, site padrão para o IP.
 `farmcloudmc.com` e os outros vhosts não mudam: só o acesso pelo IP cai no
 portfólio.
 
-**Fall Detect** (demo): **http://178.105.63.20/fall-detect/** — Flask em
-`127.0.0.1:5001`, unidade `fall-detect.service`. Sem câmera neste servidor;
-no painel dá para apontar um RTSP.
-
-**EPI Detect** (demo): **http://178.105.63.20/epi-detect/** — Flask em
-`127.0.0.1:5002`, unidade `epi-detect.service`. Sem câmera neste servidor;
-no painel dá para apontar um RTSP.
+**Fall Detect** e **EPI Detect** ficam no portfólio só com o código no GitHub.
+As unidades `fall-detect.service` e `epi-detect.service` estão desligadas neste
+servidor (YOLO no CPU travava a máquina). Repos:
+[Fall-Detect](https://github.com/HenriqueErdei/Fall-Detect),
+[EPI-Detect](https://github.com/HenriqueErdei/EPI-Detect).
 
 ```bash
 nvm use

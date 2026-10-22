@@ -12,6 +12,7 @@ import { cn } from "@/lib/cn"
 import { score } from "@/lib/fuzzy"
 import { openMission } from "@/lib/openMission"
 import { onTogglePalette } from "@/lib/palette"
+import { formatPhoneBR } from "@/lib/phone"
 import { scrollToStage, setScrollLocked } from "@/lib/scrollTo"
 import { useTheme } from "@/theme/context"
 
@@ -162,13 +163,14 @@ export function CommandPalette() {
     })
 
     if (profile.phone) {
+      const phoneLabel = formatPhoneBR(profile.phone)
       push({
         id: "contact:phone",
         group: "contact",
         label: t.palette.copyPhone,
-        hint: profile.phone,
+        hint: phoneLabel,
         run: () => {
-          void navigator.clipboard?.writeText(profile.phone!)
+          void navigator.clipboard?.writeText(phoneLabel)
           return t.palette.copied
         },
       })

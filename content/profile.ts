@@ -17,7 +17,7 @@ export const profile: Profile = {
   location: "São Paulo, Brazil",
   timezone: "America/Sao_Paulo",
 
-  email: "henriqueerdeijob@gmail.com",
+  email: "contato@henriqueerdei.com.br",
   phone: "11925815808",
 
   headline: {
@@ -57,8 +57,8 @@ export const profile: Profile = {
     },
     {
       label: "Email",
-      handle: "henriqueerdeijob@gmail.com",
-      url: "mailto:henriqueerdeijob@gmail.com",
+      handle: "contato@henriqueerdei.com.br",
+      url: "mailto:contato@henriqueerdei.com.br",
       icon: "mail",
     },
   ],

@@ -123,7 +123,7 @@ export const es: Dict = {
   work: {
     designation: "Proyectos",
     title: "Proyectos",
-    subtitle: "Casos seleccionados con impacto medible — se publican conforme estén listos.",
+    subtitle: "Casos seleccionados — lo que está en el aire y lo que hace el código.",
     empty:
       "Nuevos case studies en preparación. Historial completo en Experiencia y en el CV.",
     status: {

@@ -128,7 +128,7 @@ export const pt = {
   work: {
     designation: "Projetos",
     title: "Projetos",
-    subtitle: "Cases selecionados com impacto mensurável — entram aqui conforme forem publicados.",
+    subtitle: "Cases selecionados — o que está no ar e o que o código faz.",
     empty: "Novos case studies em preparação. Experiência detalhada na seção Experiência e no currículo.",
     status: {
       orbital: "No ar",

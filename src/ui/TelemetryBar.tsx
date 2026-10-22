@@ -20,17 +20,27 @@ export function TelemetryBar() {
 
   return (
     <header className="site-header fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md">
-      <div className="shell flex h-14 items-center justify-between gap-4">
+      <div className="shell flex flex-wrap items-center justify-between gap-x-3 md:h-14 md:flex-nowrap md:gap-4">
         <button
           type="button"
           onClick={() => scrollToStage("intro")}
-          className="site-brand truncate"
+          className="site-brand min-w-0 max-w-[42%] truncate py-3 md:max-w-none md:py-0"
         >
           {profile.name}
         </button>
 
-        <nav aria-label={t.a11y.navLabel} className="min-w-0 flex-1 overflow-x-auto">
-          <ul className="flex items-center justify-center gap-1 sm:gap-2 lg:gap-4">
+        <div className="flex shrink-0 items-center gap-1.5 py-3 md:order-3 md:gap-2 md:py-0">
+          <PaletteTrigger />
+          <LangSwitch />
+          <SoundToggle />
+          <ThemeToggle />
+        </div>
+
+        <nav
+          aria-label={t.a11y.navLabel}
+          className="site-header-nav basis-full border-t border-line-soft md:order-2 md:min-w-0 md:flex-1 md:basis-auto md:overflow-x-auto md:border-t-0"
+        >
+          <ul className="flex flex-wrap items-center justify-center gap-x-0.5 gap-y-0 py-1 md:flex-nowrap md:justify-center md:gap-2 md:py-0 lg:gap-4">
             {NAV_STAGES.map((stage) => {
               const current = stage.id === active
               return (
@@ -48,13 +58,6 @@ export function TelemetryBar() {
             })}
           </ul>
         </nav>
-
-        <div className="flex shrink-0 items-center gap-2">
-          <PaletteTrigger />
-          <LangSwitch />
-          <SoundToggle />
-          <ThemeToggle />
-        </div>
       </div>
     </header>
   )

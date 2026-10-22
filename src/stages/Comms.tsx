@@ -2,6 +2,7 @@ import { ArrowUp, ArrowUpRight, Check, Copy, FileDown, Mail, Phone } from "lucid
 import { useEffect, useRef, useState } from "react"
 import { profile } from "#content/profile"
 import { useI18n } from "@/i18n/context"
+import { formatPhoneBR } from "@/lib/phone"
 import { scrollToStage } from "@/lib/scrollTo"
 import { ExternalLink } from "@/ui/ExternalLink"
 import { Panel } from "@/ui/Panel"
@@ -149,12 +150,6 @@ function LocalClock() {
       {now}
     </time>
   )
-}
-
-function formatPhoneBR(digits: string) {
-  const d = digits.replace(/\D/g, "")
-  if (d.length === 11) return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
-  return digits
 }
 
 function CopyContactButton({ value, copiedLabel }: { value: string; copiedLabel: string }) {
